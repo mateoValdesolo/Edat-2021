@@ -14,7 +14,7 @@ public class PruebaLista {
         l2.insertar(3, 1);
         l2.insertar(4, 2);
         l3 = concatenar(l1, l2);
-        System.out.println("Lista concatenada: " + l3.toString());
+        System.out.println("Lista concatenada l3: " + l3.toString());
         l4 = new Lista();
         l4.insertar(1, 1);
         l4.insertar(2, 2);
@@ -28,6 +28,7 @@ public class PruebaLista {
         l4.insertar(2, 10);
         l4.insertar(1, 11);
         System.out.println("Lista l4 Comprobar: " + comprobar(l4));
+        System.out.println("l3 invertida: "+invertir(l3).toString());
 
     }
 
@@ -97,5 +98,23 @@ public class PruebaLista {
             }
         }
         return ret;
+    }
+
+    public static Lista invertir(Lista l1){
+        //Invierte la lista ingresada por parametro
+        Lista invert = new Lista();
+        Lista listaClon = l1.clone();
+        int i = 1, longi = l1.longitud();
+        if(!l1.esVacia()){
+            //Si la lista no es vacia hacer
+            while (longi > 0) {
+                invert.insertar(listaClon.recuperar(longi), i);
+                longi--;
+                i++;
+            }  
+        } else {
+            invert = listaClon;
+        }
+        return invert;
     }
 }
