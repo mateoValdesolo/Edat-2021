@@ -167,6 +167,7 @@ public class Lista {
 
     @Override
     public String toString() {
+        //Devuelve un string con los elementos de la lista
         String ret = "Lista vacia";
         if (!esVacia()) {
             Nodo aux = this.cabecera;
