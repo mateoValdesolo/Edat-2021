@@ -6,7 +6,7 @@ import lineales.dinamicas.Pila;
 
 public class PruebaLista {
     public static void main(String[] args) {
-        Lista l1, l2, l3, l4;
+        Lista l1, l2, l3, l4, l5;
         l1 = new Lista();
         l2 = new Lista();
         l1.insertar(1, 1);
@@ -29,6 +29,12 @@ public class PruebaLista {
         l4.insertar(1, 11);
         System.out.println("Lista l4 Comprobar: " + comprobar(l4));
         System.out.println("l3 invertida: "+invertir(l3).toString());
+        l5 = intercalar(l1, l2);
+        System.out.println(l5.toString());
+        l5.invertir();
+        System.out.println(l5.toString());
+        System.out.println(contarRecur(l4,1));
+
 
     }
 
@@ -116,5 +122,53 @@ public class PruebaLista {
             invert = listaClon;
         }
         return invert;
+    }
+
+    public static Lista intercalar(Lista l1, Lista l2){
+        int longi = l1.longitud() + l2.longitud(), j = 1, k = 1;
+        Lista ret = new Lista();
+        for (int i = 1; i <= longi; i++) {
+            if ((i % 2) == 0){
+                ret.insertar(l2.recuperar(j), i);
+                j++;
+            } else {
+                ret.insertar(l1.recuperar(k), i);
+                k++;
+            }
+            
+        }
+        return ret;
+    }
+
+    public static int contarIter(Lista l1, Object elem){
+        int longi = l1.longitud(), ret = 0;
+        for (int i = 1; i <= longi; i++) {
+            if(l1.recuperar(i).equals(elem)){
+                ret++;
+            }
+        }
+        return ret;
+    }
+
+    public static int contarRecur(Lista l1, Object elem){
+        return contarRecurAux(l1,elem,1,0);
+    }
+
+    private static int contarRecurAux(Lista l1, Object elem, int cont, int veces){
+        int ret = 0;
+        if(cont > l1.longitud()){
+            ret = veces;
+        } else{
+            if(l1.recuperar(cont).equals(elem)){
+                veces++;
+            }
+            cont++;
+            ret = contarRecurAux(l1,elem,cont,veces);
+        }
+        return ret;
+    }
+
+    public static boolean esCapicua(Lista l1){
+        
     }
 }

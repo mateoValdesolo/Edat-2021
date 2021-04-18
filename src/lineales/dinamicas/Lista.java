@@ -72,29 +72,22 @@ public class Lista {
     }
 
     public Object recuperar(int pos) {
-        //Devuelve el elemento que se encuentra en la posicion de la lista
-        Object ret = null;
-        if (!esVacia()) {
-            if (pos >= 1 || pos <= this.longitud()) {
-                //Posiciones validas para acceder
-                if (pos == 1) {
-                    //Si pos == 1, asigno el elemento que se encuentra en la cabecera
-                    ret = this.cabecera.getElem();
-                } else {
-                    //Caso general
-                    Nodo aux = this.cabecera;
-                    int i = 1;
-                    while (i < pos) {
-                        //Recorro la lista hasta llegar a la posicion del elemento a recuperar
-                        aux = aux.getEnlace();
-                        i++;
-                    }
-                    //Asigno el elemento que se encuentra en la posicion pos
-                    ret = aux.getElem();
+        //Devuelve el elemento de la lista en la posicion pos
+        Object s;
+        if (pos < 1 || pos > this.longitud()) {
+            //Si la posicion no es valida, devuelve null
+            s = null;
+        } else {
+            //Avanza hasta la posicion pos
+            Nodo aux = this.cabecera; 
+                int i = 1;
+                while (i < pos) {
+                    aux = aux.getEnlace();
+                    i++;
                 }
-            }
+                s = aux.getElem();
         }
-        return ret;
+        return s;
     }
 
     public int localizar(Object elem) {
@@ -167,20 +160,41 @@ public class Lista {
 
     @Override
     public String toString() {
-        //Devuelve un string con los elementos de la lista
-        String ret = "Lista vacia";
+        String s = "[]";
+        Nodo aux = this.cabecera;
         if (!esVacia()) {
-            Nodo aux = this.cabecera;
-            ret = "[";
-            while (aux != null) {
-                ret += aux.getElem().toString();
-                aux = aux.getEnlace();
-                if (aux != null) {
-                    ret += ", ";
-                }
+            s = "[";
+        while (aux != null) {
+            s += aux.getElem();
+            aux = aux.getEnlace();
+            if (aux != null) {
+                s += ", ";
             }
-            ret += "]";
         }
-        return ret;
+        s += "]";
+        }
+        return s;
+    }
+
+    public void invertir() {
+        Nodo aux = this.cabecera;
+        invertirAux(this.cabecera);
+        if (aux != null) {
+            aux.setEnlace(null);
+        }
+    }
+
+    private void invertirAux(Nodo nodo) {
+        if (nodo != null) {
+            this.cabecera = nodo;
+            invertirAux(nodo.getEnlace());
+            if (nodo.getEnlace() != null) {
+                nodo.getEnlace().setEnlace(nodo);
+            }
+        }
+    }
+
+    public void eliminarApariciones(Object x){
+
     }
 }
