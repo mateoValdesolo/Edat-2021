@@ -1,7 +1,7 @@
 package lineales.dinamicas;
 
-	 //import lineales.estaticas.Cola;
-	import lineales.dinamicas.Cola;
+	import lineales.estaticas.Cola;
+	//import lineales.dinamicas.Cola;
 
 public class TestingCola {
 

@@ -6,7 +6,7 @@ import lineales.dinamicas.Pila;
 
 public class PruebaLista {
     public static void main(String[] args) {
-        Lista l1, l2, l3, l4, l5;
+        Lista l1, l2, l3, l4, l5, l6;
         l1 = new Lista();
         l2 = new Lista();
         l1.insertar(1, 1);
@@ -28,13 +28,20 @@ public class PruebaLista {
         l4.insertar(2, 10);
         l4.insertar(1, 11);
         System.out.println("Lista l4 Comprobar: " + comprobar(l4));
-        System.out.println("l3 invertida: "+invertir(l3).toString());
+        System.out.println("l3 invertida: " + invertir(l3).toString());
         l5 = intercalar(l1, l2);
         System.out.println(l5.toString());
         l5.invertir();
         System.out.println(l5.toString());
-        System.out.println(contarRecur(l4,1));
-
+        System.out.println(contarRecur(l4, 1));
+        l4.eliminarApariciones(1);
+        System.out.println(l4.toString());
+        l6 = new Lista();
+        l6.insertar(1, 1);
+        l6.insertar(2, 2); 
+        l6.insertar(2, 3);
+        l6.insertar(1, 4);
+        System.out.println("Es capicua?: " + esCapicua(l6));
 
     }
 
@@ -63,112 +70,114 @@ public class PruebaLista {
          * es cadena invertida). Ej: si L1=[9,6,5,0,9,6,5,0,5,6,9], cadena=965 y
          * cadena'=569, entonces la lista L1 cumple con la condición deseada.
          */
-        boolean ret = false;
-        Lista clonLista = l1.clone();
-        if (!clonLista.esVacia()) {
-            // Si la lista no es vacia resolver
-            Cola col = new Cola();
-            Pila pil = new Pila();
-            while ((int) clonLista.recuperar(1) != 0) {
-                // Se ponen los elementos de la lista hasta el primer 0 en la cola
-                col.poner(clonLista.recuperar(1));
-                clonLista.eliminar(1);
-            }
-            // Elimina el 0
-            clonLista.eliminar(1);
-            while (!clonLista.esVacia() && (int)clonLista.recuperar(1) != 0 ) {
-                // Se ponen los elementos de la lista hasta el primer 0 en la cola
-                if (clonLista.recuperar(1).equals(col.obtenerFrente())) {
-                    // Verifico que el elemento a ingresar en col2 sea igual a el de col
-                    pil.apilar(clonLista.recuperar(1));
-                    clonLista.eliminar(1);
-                    col.sacar();
-                } else {
-                    // Vacio la lista asi corto la iteracion
-                    clonLista.vaciar();
-                }
-            }
-            // Elimina el 0
-            clonLista.eliminar(1);
-            while (!clonLista.esVacia()) {
-                if (clonLista.recuperar(1).equals(pil.obtenerTope())) {
-                    clonLista.eliminar(1);
-                    pil.desapilar();
-                } else {
-                    // Vacio la lista asi corto la iteracion
-                    clonLista.vaciar();
-                }
-            }
-            if (clonLista.esVacia() && pil.esVacia()) {
-                ret = true;
-            }
+        Cola cola = new Cola();
+        Pila pila = new Pila();
+        int i = 1;
+        boolean ret = true;
+        while ((int) l1.recuperar(i) != 0) {
+            cola.poner(l1.recuperar(i));
+            pila.apilar(l1.recuperar(i));
+            i++;
+        }
+        i++;
+        while ((int) l1.recuperar(i) != 0 && !cola.esVacia() && ret) {
+            ret = (l1.recuperar(i) == cola.obtenerFrente()) && (!cola.esVacia());
+            cola.sacar();
+            i++;
+        }
+        i++;
+        while ((l1.recuperar(i) != null) && !pila.esVacia() && ret) {
+            ret = (l1.recuperar(i) == pila.obtenerTope()) && (!pila.esVacia());
+            pila.desapilar();
+            i++;
         }
         return ret;
     }
 
-    public static Lista invertir(Lista l1){
-        //Invierte la lista ingresada por parametro
+    public static Lista invertir(Lista l1) {
+        // Invierte la lista ingresada por parametro
         Lista invert = new Lista();
         Lista listaClon = l1.clone();
         int i = 1, longi = l1.longitud();
-        if(!l1.esVacia()){
-            //Si la lista no es vacia hacer
+        if (!l1.esVacia()) {
+            // Si la lista no es vacia hacer
             while (longi > 0) {
                 invert.insertar(listaClon.recuperar(longi), i);
                 longi--;
                 i++;
-            }  
+            }
         } else {
             invert = listaClon;
         }
         return invert;
     }
 
-    public static Lista intercalar(Lista l1, Lista l2){
+    public static Lista intercalar(Lista l1, Lista l2) {
+        //Recibe dos listas L1 y L2 y devuelve una lista nueva con los elementos de L1 y L2 concatenados
         int longi = l1.longitud() + l2.longitud(), j = 1, k = 1;
         Lista ret = new Lista();
         for (int i = 1; i <= longi; i++) {
-            if ((i % 2) == 0){
+            if ((i % 2) == 0) {
                 ret.insertar(l2.recuperar(j), i);
                 j++;
             } else {
                 ret.insertar(l1.recuperar(k), i);
                 k++;
             }
-            
+
         }
         return ret;
     }
 
-    public static int contarIter(Lista l1, Object elem){
+    public static int contarIter(Lista l1, Object elem) {
+        //Cuenta iterativamente las apariciones de elem en l1
         int longi = l1.longitud(), ret = 0;
         for (int i = 1; i <= longi; i++) {
-            if(l1.recuperar(i).equals(elem)){
+            if (l1.recuperar(i).equals(elem)) {
                 ret++;
             }
         }
         return ret;
     }
 
-    public static int contarRecur(Lista l1, Object elem){
-        return contarRecurAux(l1,elem,1,0);
+    public static int contarRecur(Lista l1, Object elem) {
+        //Cuenta recursivamente las apariciones de elem en l1 
+        return contarRecurAux(l1, elem, 1, 0);
     }
 
-    private static int contarRecurAux(Lista l1, Object elem, int cont, int veces){
+    private static int contarRecurAux(Lista l1, Object elem, int cont, int veces) {
         int ret = 0;
-        if(cont > l1.longitud()){
+        if (cont > l1.longitud()) {
             ret = veces;
-        } else{
-            if(l1.recuperar(cont).equals(elem)){
+        } else {
+            if (l1.recuperar(cont).equals(elem)) {
                 veces++;
             }
             cont++;
-            ret = contarRecurAux(l1,elem,cont,veces);
+            ret = contarRecurAux(l1, elem, cont, veces);
         }
         return ret;
     }
 
-    public static boolean esCapicua(Lista l1){
-        
+    public static boolean esCapicua(Lista l1) {
+        //Verifica si la lista es capicua
+        boolean ret = true;
+        int longi = l1.longitud(), cont = 1, j = l1.longitud();
+        Cola c1 = new Cola(), c2 = new Cola();
+        for (int i = 1; i == longi; i++) {
+            c1.poner(l1.recuperar(i));
+            c2.poner(l1.recuperar(j));
+            j--;
+        }
+        while (!c1.esVacia() && !c2.esVacia() && ret == true) {
+            if(c1.obtenerFrente().equals(c2.obtenerFrente())){
+                ret = true;
+                c1.sacar();
+                c2.sacar();
+            } else {
+                ret = false;
+            }
+        }
+        return ret;
     }
 }

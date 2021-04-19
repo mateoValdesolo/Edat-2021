@@ -23,8 +23,9 @@ public class Cola {
     }
 
     public boolean poner(Object elemento) {
-        /*Pone un elemento en la cola, si la cola esta llena retorna false,
-        caso contrario retorna true y pone el elemento
+        /*
+         * Pone un elemento en la cola, si la cola esta llena retorna false, caso
+         * contrario retorna true y pone el elemento
          */
         boolean exito = false;
         if ((this.fin + 1) % this.TAMANIO != this.frente) {
@@ -36,7 +37,7 @@ public class Cola {
     }
 
     public boolean sacar() {
-        /*Saca un elemento si la cola no esta vacia*/
+        /* Saca un elemento si la cola no esta vacia */
         boolean exito = true;
         if (this.esVacia()) {
             exito = false;
@@ -48,7 +49,7 @@ public class Cola {
     }
 
     public Object obtenerFrente() {
-        //Retorna el elemento que se encuentra en el frente de la cola
+        // Retorna el elemento que se encuentra en el frente de la cola
         Object ret = null;
         if (!esVacia()) {
             ret = this.arreglo[this.frente];
@@ -59,7 +60,7 @@ public class Cola {
     }
 
     public boolean esVacia() {
-        //Retorna true si esta vacia la cola, false en caso contrario
+        // Retorna true si esta vacia la cola, false en caso contrario
         boolean ret = false;
         if (this.frente == this.fin) {
             ret = true;
@@ -68,7 +69,7 @@ public class Cola {
     }
 
     public void vaciar() {
-        //Vacia la cola
+        // Vacia la cola
         for (int i = this.frente; i != this.fin; i = (i + 1) % this.TAMANIO) {
             this.arreglo[i] = null;
             this.frente = (this.frente + 1) % this.TAMANIO;
@@ -76,22 +77,24 @@ public class Cola {
     }
 
     public Cola clone() {
-        //Retorna un clon de la cola actual
+        // Retorna un clon de la cola actual
         Cola clon = new Cola();
-        int i;
-        if (this.frente != this.fin) {
-            for (i = this.frente; i != this.fin; i = (i + 1) % this.TAMANIO) {
-                clon.arreglo[i] = this.arreglo[i];
+        if (!esVacia()) {
+            int i;
+            if (this.frente != this.fin) {
+                for (i = this.frente; i != this.fin; i = (i + 1) % this.TAMANIO) {
+                    clon.arreglo[i] = this.arreglo[i];
+                }
+                clon.fin = this.fin;
+                clon.frente = this.frente;
             }
-            clon.fin = this.fin;
-            clon.frente = this.frente;
         }
         return clon;
     }
 
     @Override
     public String toString() {
-        //Retorna un string con los elementos de la cola
+        // Retorna un string con los elementos de la cola
         String cad = "";
         if (esVacia()) {
             cad = "La cola esta vacia";
