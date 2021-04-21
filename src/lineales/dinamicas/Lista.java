@@ -177,36 +177,34 @@ public class Lista {
         return s;
     }
 
-    public void invertir() {
-        //Invierte la lista actual
-        Nodo aux = this.cabecera;
-        invertirAux(this.cabecera);
-        if (aux != null) {
-            aux.setEnlace(null);
-        }
-    }
-
-    private void invertirAux(Nodo nodo) {
-        if (nodo != null) {
-            this.cabecera = nodo;
-            invertirAux(nodo.getEnlace());
-            if (nodo.getEnlace() != null) {
-                nodo.getEnlace().setEnlace(nodo);
-            }
-        }
-    }
+    /*
+     * public void invertir(){ int longi = this.longitud(); Nodo aux =
+     * this.cabecera; while(aux != null) { if(aux != null){ this.cabecera = aux; aux
+     * = aux.getEnlace(); if(aux.getEnlace() != null){
+     * aux.getEnlace().setEnlace(aux); } } } if(aux != null){ aux.setEnlace(null); }
+     * } /*public void invertir() { //Invierte la lista actual Nodo aux =
+     * this.cabecera; invertirAux(this.cabecera); if (aux != null) {
+     * aux.setEnlace(null); } }
+     * 
+     * private void invertirAux(Nodo nodo) { if (nodo != null) { this.cabecera =
+     * nodo; invertirAux(nodo.getEnlace()); if (nodo.getEnlace() != null) {
+     * nodo.getEnlace().setEnlace(nodo); } } }
+     */
 
     public void eliminarApariciones(Object x) {
-        //Elimina las apariciones del elemento x en la lista actual
-        Nodo aux, aux2;
-        for (int i = 1; i <= this.longitud(); i++) {
-            if (this.recuperar(i).equals(x)) {
-                if(i == 1){ 
-                    this.cabecera = this.cabecera.getEnlace();
-                } else {
-                    aux = this.cabecera;
-                    aux = aux.getEnlace();
-                    aux.setEnlace(aux.getEnlace().getEnlace());
+        // Elimina las apariciones del elemento x en la lista actual
+        int i = 1;
+        if (!this.esVacia()) {
+            if (this.cabecera.getElem().equals(x)) {
+                this.cabecera = this.cabecera.getEnlace();
+            } else {
+                Nodo aux = this.cabecera;
+                while (i <= this.longitud()) {
+                    if (aux.getEnlace().getElem().equals(x)) {
+                        aux = aux.getEnlace();
+                        aux.setEnlace(aux.getEnlace().getEnlace());
+                    }
+                    i++;
                 }
                 
             }

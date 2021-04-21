@@ -31,8 +31,8 @@ public class PruebaLista {
         System.out.println("l3 invertida: " + invertir(l3).toString());
         l5 = intercalar(l1, l2);
         System.out.println(l5.toString());
-        l5.invertir();
-        System.out.println(l5.toString());
+        //l5.invertir();
+        //System.out.println(l5.toString());
         System.out.println(contarRecur(l4, 1));
         l4.eliminarApariciones(1);
         System.out.println(l4.toString());
@@ -124,7 +124,6 @@ public class PruebaLista {
                 ret.insertar(l1.recuperar(k), i);
                 k++;
             }
-
         }
         return ret;
     }
@@ -162,7 +161,7 @@ public class PruebaLista {
     public static boolean esCapicua(Lista l1) {
         //Verifica si la lista es capicua
         boolean ret = true;
-        int longi = l1.longitud(), cont = 1, j = l1.longitud();
+        int longi = l1.longitud(), j = l1.longitud();
         Cola c1 = new Cola(), c2 = new Cola();
         for (int i = 1; i == longi; i++) {
             c1.poner(l1.recuperar(i));
