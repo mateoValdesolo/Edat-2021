@@ -259,6 +259,7 @@ public class ArbolBin {
         }
     }
 
+    
     public Lista listarPorNiveles() {
         // Devuelve una lista con los elementos del árbol binario en el recorrido por
         // niveles
