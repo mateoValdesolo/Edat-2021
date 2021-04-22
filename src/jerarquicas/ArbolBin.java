@@ -294,7 +294,21 @@ public class ArbolBin {
          * Retorna en una lista la secuencia formada por los elementos almacenados en
          * las hojas del árbol, tomadas de izquierda a derecha.
          */
+        Lista ret = new Lista();
+        if (!esVacio()) {
+            fronteraAux(this.raiz, ret);
+        }
+        return ret;
+    }
 
+    public void fronteraAux(NodoArbol nodo, Lista lis) {
+        if(nodo != null){
+            if(nodo.getDerecho() == null && nodo.getIzquierdo() == null){
+                lis.insertar(nodo.getElem(), lis.longitud()+1);
+            }
+            fronteraAux(nodo.getIzquierdo(), lis);
+            fronteraAux(nodo.getDerecho(),lis);
+        }
     }
 
     private NodoArbol obtenerNodo(NodoArbol n, Object buscado) {
