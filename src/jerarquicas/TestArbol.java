@@ -22,10 +22,8 @@ public class TestArbol {
         System.out.println(arb1.toString());
         ArbolBin arb2 =  new ArbolBin();
         arb2 = arb1.clone();
-        arb2.insertar('J', 'H', 'I');
-        arb1.insertar('X', 'H', 'I');
-        System.out.println(arb1.listarPorNiveles());
-        System.out.println(arb2.listarPorNiveles());
         System.out.println(arb1.padre('H'));
+        System.out.println(arb2.toString());
+        System.out.println(arb2.altura());
     }
 }

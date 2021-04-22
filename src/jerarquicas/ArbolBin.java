@@ -53,10 +53,12 @@ public class ArbolBin {
         // Dado un elemento devuelve el valor almacenado en su nodo padre (busca la
         // primera aparición de elemento)
         Object ret = null;
-        if (this.raiz.getElem().equals(elem)) {
-            ret = this.raiz.getElem();
-        } else {
-            ret = padreAux(this.raiz, elem);
+        if (!esVacio()) {
+            if (this.raiz.getElem().equals(elem)) {
+                ret = null;
+            } else {
+                ret = padreAux(this.raiz, elem);
+            }
         }
         return ret;
     }
@@ -92,7 +94,7 @@ public class ArbolBin {
     }
 
     private int alturaAux(NodoArbol nodo, int altura) {
-        int izq, der, ret = 0;
+        int izq, der, ret = -1;
         if (nodo != null) {
             der = alturaAux(nodo.getDerecho(), altura) + 1;
             izq = alturaAux(nodo.getIzquierdo(), altura) + 1;
@@ -136,6 +138,7 @@ public class ArbolBin {
     }
 
     public void vaciar() {
+        // Vacia el arbol
         this.raiz = null;
     }
 
@@ -179,7 +182,6 @@ public class ArbolBin {
     }
 
     private String toStringAux(NodoArbol nodo, String str) {
-        
 
         if (nodo != null) {
             NodoArbol izq = nodo.getIzquierdo(), der = nodo.getDerecho();
@@ -190,7 +192,7 @@ public class ArbolBin {
             } else {
                 if (izq == null && der == null) {
                     str += " HI: - ";
-                        str += " HD: - " + "\n";
+                    str += " HD: - " + "\n";
                 } else {
                     if (izq == null) {
                         str += " HI: -";
@@ -199,10 +201,10 @@ public class ArbolBin {
                         if (der == null) {
                             str += " HI: " + izq.getElem();
                             str += " HD: - " + "\n";
-                        }   
+                        }
                     }
                 }
-                
+
             }
             str = toStringAux(izq, str);
             str = toStringAux(der, str);
@@ -259,7 +261,6 @@ public class ArbolBin {
         }
     }
 
-    
     public Lista listarPorNiveles() {
         // Devuelve una lista con los elementos del árbol binario en el recorrido por
         // niveles
@@ -293,6 +294,7 @@ public class ArbolBin {
          * Retorna en una lista la secuencia formada por los elementos almacenados en
          * las hojas del árbol, tomadas de izquierda a derecha.
          */
+
     }
 
     private NodoArbol obtenerNodo(NodoArbol n, Object buscado) {
