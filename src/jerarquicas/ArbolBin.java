@@ -149,13 +149,13 @@ public class ArbolBin {
          */
         ArbolBin clon = new ArbolBin();
         if (!esVacio()) {
-            NodoArbol aux = new NodoArbol(this.raiz.getElem(), null, null);
-            clon.raiz = aux;
-            cloneAux(aux, this.raiz);
+            NodoArbol nod = new NodoArbol(this.raiz.getElem(), null, null);
+            clon.raiz = nod;
+            cloneAux(nod, this.raiz);
         }
         return clon;
     }
-
+    
     private void cloneAux(NodoArbol aux, NodoArbol nodo) {
         if (nodo != null) {
             if (nodo.getIzquierdo() != null) {
@@ -185,7 +185,7 @@ public class ArbolBin {
 
         if (nodo != null) {
             NodoArbol izq = nodo.getIzquierdo(), der = nodo.getDerecho();
-            str += " Nodo: " + nodo.getElem() + "\n";
+            str += " Nodo: " + nodo.getElem();
             if (izq != null && der != null) {
                 str += " HI: " + izq.getElem();
                 str += " HD: " + der.getElem() + "\n";
@@ -302,12 +302,12 @@ public class ArbolBin {
     }
 
     public void fronteraAux(NodoArbol nodo, Lista lis) {
-        if(nodo != null){
-            if(nodo.getDerecho() == null && nodo.getIzquierdo() == null){
-                lis.insertar(nodo.getElem(), lis.longitud()+1);
+        if (nodo != null) {
+            if (nodo.getDerecho() == null && nodo.getIzquierdo() == null) {
+                lis.insertar(nodo.getElem(), lis.longitud() + 1);
             }
             fronteraAux(nodo.getIzquierdo(), lis);
-            fronteraAux(nodo.getDerecho(),lis);
+            fronteraAux(nodo.getDerecho(), lis);
         }
     }
 

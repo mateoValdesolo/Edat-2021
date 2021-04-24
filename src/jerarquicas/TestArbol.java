@@ -25,5 +25,7 @@ public class TestArbol {
         System.out.println(arb1.padre('H'));
         System.out.println(arb2.toString());
         System.out.println(arb2.altura());
+        System.out.println(arb1.frontera());
+        System.out.println(arb2.toString());
     }
 }
