@@ -206,8 +206,41 @@ public class Lista {
                     }
                     i++;
                 }
-                
+
             }
         }
     }
+
+    public Lista obtenerMultiplos(int num) {
+        /*
+         * Recibe un número y devuelve una lista nueva que contiene todos los elementos
+         * de las posiciones múltiplos de num, en el mismo orden encontrado
+         */
+        int i = 1;
+        Lista lis = new Lista();
+        boolean primera = false;
+
+        if (!esVacia()) {
+            Nodo copia = null;
+            Nodo nuevo;
+            Nodo aux = this.cabecera;
+
+            while (aux != null) {
+                if ((i % num) == 0) {
+                    nuevo = new Nodo(aux.getElem(), null);
+                    if (!primera) {
+                        primera = true;
+                        lis.cabecera = nuevo;
+                        copia = new Nodo(aux.getElem(), null);
+                    }
+                    copia.setEnlace(nuevo);
+                    copia = copia.getEnlace();
+                }
+                aux = aux.getEnlace();
+                i++;
+            }
+        }
+        return lis;
+    }
+
 }
