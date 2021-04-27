@@ -192,21 +192,21 @@ public class Lista {
      */
 
     public void eliminarApariciones(Object x) {
-        // Elimina las apariciones del elemento x en la lista actual
-        int i = 1;
-        if (!this.esVacia()) {
-            if (this.cabecera.getElem().equals(x)) {
-                this.cabecera = this.cabecera.getEnlace();
-            } else {
-                Nodo aux = this.cabecera;
-                while (i <= this.longitud()) {
-                    if (aux.getEnlace().getElem().equals(x)) {
-                        aux = aux.getEnlace();
+        /*
+         * Elimina las apariciones del elemento x en la lista actual
+         */
+        Nodo aux = this.cabecera;
+
+        if (!esVacia()) {
+            while (aux != null) {
+                if (this.cabecera.getElem().equals(x)) {
+                    this.cabecera = this.cabecera.getEnlace();
+                } else {
+                    if ((aux.getEnlace() != null) && aux.getEnlace().getElem().equals(x)) {
                         aux.setEnlace(aux.getEnlace().getEnlace());
                     }
-                    i++;
                 }
-
+                aux = aux.getEnlace();
             }
         }
     }
@@ -231,7 +231,7 @@ public class Lista {
                     if (!primera) {
                         primera = true;
                         lis.cabecera = nuevo;
-                        copia = new Nodo(aux.getElem(), null);
+                        copia = nuevo;
                     }
                     copia.setEnlace(nuevo);
                     copia = copia.getEnlace();
