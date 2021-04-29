@@ -94,22 +94,15 @@ public class Lista {
     public int localizar(Object elem) {
         // Devuelve la primera ocurrencia de elem en la lista
         int pos = -1;
+        int cont = 1;
+        Nodo aux = this.cabecera;
         if (!esVacia()) {
-            int i = 1;
-            Nodo aux = this.cabecera;
-            boolean corte = false;
-            while (i <= this.longitud() && corte == false) {
-                // Recorre la lista
-                if (aux.getElem().equals(elem)) {
-                    /*
-                     * Si encuentra el elemento, sale de la repetitiva asignando true a corte
-                     */
-                    corte = true;
-                    pos = i;
-                } else {
-                    aux = aux.getEnlace();
-                    i++;
+            while (aux != null && pos == -1) {
+                if (aux.getElem() == elem) {
+                    pos = cont;
                 }
+                aux = aux.getEnlace();
+                cont++;
             }
         }
         return pos;

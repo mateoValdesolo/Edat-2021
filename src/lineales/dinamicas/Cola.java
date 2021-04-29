@@ -62,6 +62,7 @@ public class Cola {
     public void vaciar() {
         // Vacia la cola
         this.frente = null;
+        this.fin = null;
     }
 
     @Override

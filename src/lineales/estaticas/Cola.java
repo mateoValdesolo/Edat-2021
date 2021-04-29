@@ -53,8 +53,6 @@ public class Cola {
         Object ret = null;
         if (!esVacia()) {
             ret = this.arreglo[this.frente];
-        } else {
-            System.out.println("La cola esta vacia");
         }
         return ret;
     }
@@ -70,9 +68,9 @@ public class Cola {
 
     public void vaciar() {
         // Vacia la cola
-        for (int i = this.frente; i != this.fin; i = (i + 1) % this.TAMANIO) {
-            this.arreglo[i] = null;
-            this.frente = (this.frente + 1) % this.TAMANIO;
+        while (arreglo[this.frente] != null) {
+            arreglo[frente] = null;
+            frente = (this.frente + 1) % this.TAMANIO;
         }
     }
 
@@ -81,13 +79,13 @@ public class Cola {
         Cola clon = new Cola();
         if (!esVacia()) {
             int i;
-            if (this.frente != this.fin) {
+            
                 for (i = this.frente; i != this.fin; i = (i + 1) % this.TAMANIO) {
                     clon.arreglo[i] = this.arreglo[i];
                 }
                 clon.fin = this.fin;
                 clon.frente = this.frente;
-            }
+            
         }
         return clon;
     }
