@@ -77,15 +77,14 @@ public class Cola {
     public Cola clone() {
         // Retorna un clon de la cola actual
         Cola clon = new Cola();
+        int cont = frente;
         if (!esVacia()) {
-            int i;
-            
-                for (i = this.frente; i != this.fin; i = (i + 1) % this.TAMANIO) {
-                    clon.arreglo[i] = this.arreglo[i];
-                }
-                clon.fin = this.fin;
-                clon.frente = this.frente;
-            
+            clon.frente = this.frente;
+            clon.fin = this.fin;
+            while (cont != fin) {
+                clon.arreglo[cont] = this.arreglo[cont];
+                cont = (cont + 1) % this.TAMANIO;
+            }
         }
         return clon;
     }
