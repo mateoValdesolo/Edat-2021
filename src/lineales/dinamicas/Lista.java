@@ -236,4 +236,25 @@ public class Lista {
         return lis;
     }
 
+    public void insertarAnterior(Object elem1, Object elem2){
+        Nodo aux = this.cabecera;
+        if(!esVacia()){
+            if(this.cabecera.getElem().equals(elem1)){
+                Nodo aux1 = new Nodo(elem2,aux);
+                this.cabecera = aux1;
+                Nodo aux2 = new Nodo(elem2,aux.getEnlace());
+                aux.setEnlace(aux2);
+                aux = aux2;
+            }
+            while (aux.getEnlace() != null) {
+                if(aux.getEnlace().getElem().equals(elem1)){
+                    Nodo aux1 = new Nodo(elem2,aux.getEnlace());
+                    aux.setEnlace(aux1);
+                    aux = aux1;
+                }
+                aux = aux.getEnlace();
+            }
+        }
+    }
+
 }

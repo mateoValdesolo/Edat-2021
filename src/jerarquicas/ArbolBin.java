@@ -155,7 +155,7 @@ public class ArbolBin {
         }
         return clon;
     }
-    
+
     private void cloneAux(NodoArbol aux, NodoArbol nodo) {
         if (nodo != null) {
             if (nodo.getIzquierdo() != null) {
@@ -331,5 +331,91 @@ public class ArbolBin {
             }
         }
         return resultado;
+    }
+
+    public void cambiarHijos(Object izq, Object p, Object der) {
+        if (!esVacio()) {
+            cambiarHijosAux(this.raiz, izq, p, der);
+        }
+    }
+
+    private void cambiarHijosAux(NodoArbol nodo, Object izq, Object p, Object der) {
+        if (nodo != null) {
+            if (nodo.getElem().equals(p)) {
+                if (nodo.getIzquierdo() == null) {
+                    NodoArbol aux = new NodoArbol(izq, null, null);
+                    nodo.setIzquierdo(aux);
+                } else {
+                    NodoArbol izquierdo = nodo.getIzquierdo().getIzquierdo();
+                    NodoArbol derecho = nodo.getIzquierdo().getDerecho();
+                    NodoArbol aux = new NodoArbol(izq, izquierdo, derecho);
+                    nodo.setIzquierdo(aux);
+                }
+                if (nodo.getDerecho() == null) {
+                    NodoArbol aux = new NodoArbol(der, null, null);
+                    nodo.setDerecho(aux);
+                } else {
+                    NodoArbol izquierdo = nodo.getDerecho().getIzquierdo();
+                    NodoArbol derecho = nodo.getDerecho().getDerecho();
+                    NodoArbol aux = new NodoArbol(der, izquierdo, derecho);
+                    nodo.setDerecho(aux);
+                }
+            } else {
+                if (nodo.getIzquierdo() != null) {
+                    cambiarHijosAux(nodo.getIzquierdo(), izq, p, der);
+                }
+                if (nodo.getDerecho() != null) {
+                    cambiarHijosAux(nodo.getDerecho(), izq, p, der);
+                }
+            }
+
+        }
+
+    }
+
+    public ArbolBin clonarInvertido() {
+        ArbolBin a = new ArbolBin();
+        if (!esVacio()) {
+            a.raiz = clonarAux(this.raiz);
+        }
+        return a;
+    }
+
+    private NodoArbol clonarAux(NodoArbol n) {
+        NodoArbol nClon = null;
+        if (n != null) {
+            nClon = new NodoArbol(n.getElem(), null, null);
+            nClon.setIzquierdo(clonarAux(n.getDerecho()));
+            nClon.setDerecho(clonarAux(n.getIzquierdo()));
+        }
+        return nClon;
+    }
+
+    public boolean verificarPatron(Lista patron) {
+        boolean ret = false;
+        if (this.raiz != null) {
+            ret = verificarAux(patron, this.raiz, ret, 1);
+        }
+        return ret;
+
+    }
+
+    private boolean verificarAux(Lista lis, NodoArbol nodo, boolean ret, int pos) {
+        if (nodo != null) {
+            if (nodo.getIzquierdo() != null && nodo.getDerecho() != null) {
+                if (nodo.getElem().equals(lis.recuperar(pos))) {
+                    ret = true;
+                    pos++;
+                    ret = verificarAux(lis, nodo.getIzquierdo(), ret, pos);
+                } else {
+                    ret = false;
+                    pos--;
+                }
+                if (!ret) {
+                    ret = verificarAux(lis, nodo.getDerecho(), ret, pos);
+                }
+            }
+        }
+        return ret;
     }
 }
