@@ -185,7 +185,7 @@ public class ArbolBin {
 
         if (nodo != null) {
             NodoArbol izq = nodo.getIzquierdo(), der = nodo.getDerecho();
-            str += " Nodo: " + nodo.getElem();
+            str += "Nodo: " + nodo.getElem();
             if (izq != null && der != null) {
                 str += " HI: " + izq.getElem();
                 str += " HD: " + der.getElem() + "\n";

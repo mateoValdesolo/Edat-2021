@@ -1,8 +1,18 @@
 package test.lineales;
+import lineales.dinamicas.Lista;
+import lineales.dinamicas.Cola;
+import lineales.dinamicas.Pila;
 
 public class MixLineales {
     
     public static void main(String [] args){
+        Lista l1 = new Lista();
+        l1.insertar(8,1);
+        l1.insertar(6,2);
+        l1.insertar(2,3);
+        l1.insertar(7,4);
+        l1.insertarAnterior(7,5);
+        System.out.println(l1.toString());
 
     }
 
