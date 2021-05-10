@@ -339,38 +339,31 @@ public class ArbolBin {
         }
     }
 
-    private void cambiarHijosAux(NodoArbol nodo, Object izq, Object p, Object der) {
+    private boolean cambiarHijosAux(NodoArbol nodo, Object izq, Object p, Object der) {
+        boolean exito = false;
         if (nodo != null) {
             if (nodo.getElem().equals(p)) {
+                exito = true;
                 if (nodo.getIzquierdo() == null) {
                     NodoArbol aux = new NodoArbol(izq, null, null);
                     nodo.setIzquierdo(aux);
                 } else {
-                    NodoArbol izquierdo = nodo.getIzquierdo().getIzquierdo();
-                    NodoArbol derecho = nodo.getIzquierdo().getDerecho();
-                    NodoArbol aux = new NodoArbol(izq, izquierdo, derecho);
-                    nodo.setIzquierdo(aux);
+                    nodo.getIzquierdo().setElem(izq);
                 }
                 if (nodo.getDerecho() == null) {
                     NodoArbol aux = new NodoArbol(der, null, null);
                     nodo.setDerecho(aux);
                 } else {
-                    NodoArbol izquierdo = nodo.getDerecho().getIzquierdo();
-                    NodoArbol derecho = nodo.getDerecho().getDerecho();
-                    NodoArbol aux = new NodoArbol(der, izquierdo, derecho);
-                    nodo.setDerecho(aux);
+                    nodo.getDerecho().setElem(der);
                 }
             } else {
-                if (nodo.getIzquierdo() != null) {
-                    cambiarHijosAux(nodo.getIzquierdo(), izq, p, der);
-                }
-                if (nodo.getDerecho() != null) {
-                    cambiarHijosAux(nodo.getDerecho(), izq, p, der);
+                exito = cambiarHijosAux(nodo.getIzquierdo(), izq, p, der);
+                if(!exito){
+                    exito = cambiarHijosAux(nodo.getDerecho(), izq, p, der);
                 }
             }
-
         }
-
+        return exito;
     }
 
     public ArbolBin clonarInvertido() {

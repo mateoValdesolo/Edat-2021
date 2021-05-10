@@ -12,7 +12,7 @@ public class TestArbol {
         arb1.insertar('F', 'C', 'D');
         arb1.insertar('G', 'E', 'I');
         arb1.insertar('H', 'E', 'D');
-        System.out.println(arb1.listarPorNiveles());
+        /*System.out.println(arb1.listarPorNiveles());
         System.out.println(arb1.esVacio());
         System.out.println(arb1.altura());
         System.out.println(arb1.padre('F'));
@@ -26,6 +26,19 @@ public class TestArbol {
         System.out.println(arb2.toString());
         System.out.println(arb2.altura());
         System.out.println(arb1.frontera());
+        System.out.println(arb2.toString());*/
+        ArbolBin arb2 = new ArbolBin();
+        arb2.insertar('F', 'F', 'I');
+        arb2.insertar('A', 'F', 'I');
+        arb2.insertar('T', 'F', 'D');
+        arb2.insertar('H', 'A', 'I');
+        arb2.insertar('F', 'A', 'D');
+        arb2.insertar('P', 'T', 'D');
+        arb2.insertar('X', 'P', 'I');
         System.out.println(arb2.toString());
+        arb2.cambiarHijos('Z', 'T', 'Q');
+        System.out.println(arb2.toString());
+        
+        
     }
 }
