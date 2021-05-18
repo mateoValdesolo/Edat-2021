@@ -1,6 +1,7 @@
 package jerarquicas;
 
 import lineales.dinamicas.Lista;
+import lineales.dinamicas.Cola;
 
 public class ArbolGen {
 
@@ -20,21 +21,29 @@ public class ArbolGen {
          * elemNuevo a la estructura y falso en caso contrario.
          */
         boolean exito = false;
-        if (esVacio()) {
+        if (this.raiz == null) {
             this.raiz = new NodoGen(elemNuevo, null, null);
             exito = true;
         } else {
-            
+            NodoGen padre = obtenerNodo(this.raiz, elemPadre);
+            if (padre != null) {
+                padre.setHijoIzquierdo(new NodoGen(elemNuevo, null, padre.getHijoIzquierdo()));
+                exito = true;
+            }
         }
-
+        return exito;
     }
 
-    public boolean pertenece(Object element) {
+    public boolean pertenece(Object elem) {
         /*
          * Devuelve verdadero si el elemento pasado por parámetro está en el árbol, y
          * falso en caso contrario.
          */
-
+        boolean ret = false;
+        if (obtenerNodo(this.raiz, elem) != null) {
+            ret = true;
+        }
+        return ret;
     }
 
     public boolean esVacio() {
@@ -45,12 +54,29 @@ public class ArbolGen {
         return this.raiz == null;
     }
 
-    public Object padre(Object element) {
+    public Object padre(Object elem) {
         /*
          * Dado un elemento devuelve el valor almacenado en su nodo padre (busca la
          * primera aparición de elemento).
          */
+        return padreAux(this.raiz, elem);
+    }
 
+    private Object padreAux(NodoGen nodo, Object busc) {
+        Object padre = null;
+        if (nodo != null) {
+            NodoGen hijo = nodo.getHijoIzquierdo();
+            while (hijo != null && !hijo.getElem().equals(busc))
+                hijo = hijo.getHermanoDerecho();
+            if (hijo != null) {
+                padre = nodo.getElem();
+            } else {
+                padre = padreAux(nodo.getHijoIzquierdo(), busc);
+                if (padre == null)
+                    padre = padreAux(nodo.getHermanoDerecho(), busc);
+            }
+        }
+        return padre;
     }
 
     public int altura() {
@@ -59,11 +85,47 @@ public class ArbolGen {
          * la raíz hasta una hoja (Nota: un árbol vacío tiene altura -1 y una hoja tiene
          * altura 0)
          */
+        return alturaAux(this.raiz, -1);
+    }
 
+    private int alturaAux(NodoGen nodo, int alt) {
+        if (nodo != null) {
+            int izq, der;
+            izq = alturaAux(nodo.getHijoIzquierdo(), alt + 1);
+            der = alturaAux(nodo.getHermanoDerecho(), alt);
+            if (izq > der) {
+                alt = izq;
+            } else {
+                alt = der;
+            }
+        }
+        return alt;
     }
 
     public int nivel(Object element) {
+        /*
+         * Devuelve el nivel de un elemento en el árbol. Si el elemento no existe en el
+         * árbol devuelve -1.
+         */
+        int ret;
+        ret = nivelAux(this.raiz, element, -1);
+        return ret;
+    }
 
+    private int nivelAux(NodoGen nodo, Object busc, int nivel) {
+        if (nodo != null) {
+            if (nodo.getElem().equals(busc)) {
+                nivel++;
+            } else {
+                nivel = nivelAux(nodo.getHijoIzquierdo(), busc, nivel);
+                if (nivel == -1) {
+                    nivel = nivelAux(nodo.getHermanoDerecho(), busc, nivel);
+                } else {
+                    nivel++;
+                }
+            }
+        }
+        return nivel;
     }
 
     public Lista ancestros(Object element) {
@@ -72,7 +134,28 @@ public class ArbolGen {
          * desde la raíz hasta dicho elemento (es decir, con los ancestros del
          * elemento). Si el elemento no está en el árbol devuelve la lista vacía.
          */
+        Lista ret = new Lista();
+        ancestrosAux(this.raiz, ret, element);
+        return ret;
+    }
 
+    private boolean ancestrosAux(NodoGen nodo, Lista lis, Object elem) {
+        boolean exito = false;
+        if (nodo != null) {
+            if (nodo.getElem().equals(elem)) {
+                exito = true;
+            } else {
+                NodoGen hijo = nodo.getHijoIzquierdo();
+                while (hijo != null && !exito) {
+                    exito = ancestrosAux(hijo, lis, elem);
+                    hijo = hijo.getHermanoDerecho();
+                }
+                if (exito) {
+                    lis.insertar(nodo.getElem(), lis.longitud() + 1);
+                }
+            }
+        }
+        return exito;
     }
 
     public ArbolGen clone() {
@@ -80,7 +163,21 @@ public class ArbolGen {
          * Genera y devuelve un árbol genérico que es equivalente (igual estructura y
          * contenido de los nodos) que el árbol original.
          */
+        ArbolGen clon = new ArbolGen();
+        if (!esVacio()) {
+            clon.raiz = cloneAux(this.raiz);
+        }
+        return clon;
+    }
 
+    private NodoGen cloneAux(NodoGen nodo) {
+        NodoGen aux = new NodoGen(null, null, null);
+        if (nodo != null) {
+            aux = new NodoGen(nodo.getElem(), cloneAux(nodo.getHijoIzquierdo()), cloneAux(nodo.getHermanoDerecho()));
+        } else {
+            aux = null;
+        }
+        return aux;
     }
 
     public void vaciar() {
@@ -103,7 +200,11 @@ public class ArbolGen {
     private void listarPreordenAux(NodoGen nodo, Lista lis) {
         if (nodo != null) {
             lis.insertar(nodo.getElem(), lis.longitud() + 1);
-
+            NodoGen hijo = nodo.getHijoIzquierdo();
+            while (hijo != null) {
+                listarPreordenAux(hijo, lis);
+                hijo = hijo.getHermanoDerecho();
+            }
         }
     }
 
@@ -140,14 +241,44 @@ public class ArbolGen {
         /*
          * Devuelve una lista con los elementos del árbol en el recorrido en posorden
          */
+        Lista ret = new Lista();
+        listarPosordenAux(this.raiz, ret);
+        return ret;
+    }
 
+    private void listarPosordenAux(NodoGen nodo, Lista lis) {
+        if (nodo != null) {
+            NodoGen hijo = nodo.getHijoIzquierdo();
+            while (hijo != null) {
+                listarPosordenAux(hijo, lis);
+                hijo = hijo.getHermanoDerecho();
+            }
+            lis.insertar(nodo.getElem(), lis.longitud() + 1);
+        }
     }
 
     public Lista listarPorNiveles() {
         /*
          * Devuelve una lista con los elementos del árbol en el recorrido por niveles
          */
+        Lista ret = new Lista();
+        listarPorNivelesAux(this.raiz, ret);
+        return ret;
+    }
 
+    private void listarPorNivelesAux(NodoGen nodo, Lista lis) {
+        Cola q = new Cola();
+        q.poner(nodo);
+        while (!q.esVacia()) {
+            nodo = (NodoGen) q.obtenerFrente();
+            q.sacar();
+            lis.insertar(nodo.getElem(), lis.longitud() + 1);
+            NodoGen hijo = nodo.getHijoIzquierdo();
+            while (hijo != null) {
+                q.poner(hijo);
+                hijo = hijo.getHermanoDerecho();
+            }
+        }
     }
 
     public String toString() {
@@ -176,4 +307,38 @@ public class ArbolGen {
         return ret;
     }
 
+    private NodoGen obtenerNodo(NodoGen nodo, Object elem) {
+        /*
+         * Metodo privado que busca un elemento y devuelve el nodo que lo contiene. Si
+         * no lo encuentra devuelve null.
+         */
+        NodoGen ret = null;
+        if (nodo != null) {
+            if (nodo.getElem().equals(elem)) {
+                ret = nodo;
+            } else {
+                ret = obtenerNodo(nodo.getHijoIzquierdo(), elem);
+                if (ret == null) {
+                    ret = obtenerNodo(nodo.getHermanoDerecho(), elem);
+                }
+            }
+        }
+        return ret;
+    }
+
+    public int grado() {
+        /*
+         * Retorna el grado del arbol, cada nodo tiene un grado, que es el número de
+         * hijos (subárboles) que posee.
+         */
+        
+    }
+
+    public int gradoSubarbol(Object elem) {
+        /*
+         * Retorna el grado del subarbol, cada nodo tiene un grado, que es el número de
+         * hijos (subárboles) que posee.
+         */
+
+    }
 }
