@@ -1,18 +1,31 @@
 package test.lineales;
+
 import lineales.dinamicas.Lista;
 import lineales.dinamicas.Cola;
 import lineales.dinamicas.Pila;
 
 public class MixLineales {
-    
-    public static void main(String [] args){
+
+    public static void main(String[] args) {
         Lista l1 = new Lista();
-        l1.insertar(8,1);
-        l1.insertar(6,2);
-        l1.insertar(2,3);
-        l1.insertar(7,4);
-        l1.insertarAnterior(7,5);
+        Cola c1 = new Cola();
+        l1.insertar(8, 1);
+        l1.insertar(6, 2);
+        l1.insertar(2, 3);
+        l1.insertar(7, 4);
+        l1.insertarAnterior(7, 5);
         System.out.println(l1.toString());
+        c1.poner('a');
+        c1.poner('b');
+        c1.poner('c');
+        c1.poner('$');
+        c1.poner('d');
+        c1.poner('e');
+        c1.poner('$');
+        c1.poner('f');
+        c1.poner('g');
+        System.out.println(c1.toString());
+        System.out.println(generar(c1));
 
     }
 
@@ -130,41 +143,52 @@ public class MixLineales {
     }
 
     public static Lista crearLista(Cola c1) {
+        /*
+         * Recibe por parametro una cola que tiene el siguiente formato:
+         * c1$c2$c3$....$cn, donde cada ci es una sucesion de elementos de la cola, se
+         * debe generar como salida una lista con todas las secuencias impares
+         * invertidas y las pares igual que la original
+         */
         Lista nueva = new Lista();
         Cola clon = c1.clone();
-        clon.poner('$');
-        Cola col = new Cola();
         Pila pil = new Pila();
         int pos = 1;
         int cont = 1;
 
-        while (!clon.esVacia()) {
-            if (clon.obtenerFrente().equals('$')) {
-                if (cont % 2 != 0) {
-                    while (!pil.esVacia()) {
-                        nueva.insertar(pil.obtenerTope(), pos);
-                        pil.desapilar();
-                        pos++;
+        if (!clon.esVacia()) {
+            while (!clon.esVacia()) {
+                if (cont % 2 == 0) {
+                    if ((char) clon.obtenerFrente() == '$') {
+                        cont++;
                     }
-                    col.vaciar();
+                    nueva.insertar('$', pos);
+                    nueva.insertar(clon.obtenerFrente(), pos);
+                    pos++;
+                    
                 } else {
-                    while (!col.esVacia()) {
-                        nueva.insertar(col.obtenerFrente(), pos);
-                        col.sacar();
+                    if ((char) clon.obtenerFrente() == '$') {
+                        cont++;
+                        while (!pil.esVacia()) {
+                            nueva.insertar(pil.obtenerTope(), pos);
+                            pil.desapilar();
+                            pos++;
+                        }
+                        nueva.insertar('$', pos);
                         pos++;
+                    } else {
+                        pil.apilar(clon.obtenerFrente());
                     }
-                    pil.vaciar();
                 }
-                nueva.insertar('$', pos);
-                pos++;
-                cont++;
-            } else {
-                pil.apilar(clon.obtenerFrente());
-                col.poner(clon.obtenerFrente());
+                clon.sacar();
             }
-            clon.sacar();
+            if (cont % 2 != 0) {
+                while (!pil.esVacia()) {
+                    nueva.insertar(pil.obtenerTope(), pos);
+                    pil.desapilar();
+                    pos++;
+                }
+            }
         }
-        nueva.eliminar(pos-1);
         return nueva;
     }
 }
