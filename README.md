@@ -20,3 +20,4 @@ Repositorio correspondiente a la materia Estructuras de Datos 2021.
 - [Arbol Generico](https://github.com/mateoValdesolo/Edat-2021/blob/main/src/jerarquicas/ArbolGen.java) 🌳
 ### Tests de la Catedra
 - [TestBinario](https://github.com/mateoValdesolo/Edat-2021/blob/main/src/jerarquicas/TestBinario.java)
+- [TestGenerico](https://github.com/mateoValdesolo/Edat-2021/blob/main/src/jerarquicas/TestGenerico.java)
