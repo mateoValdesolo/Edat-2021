@@ -25,7 +25,7 @@ public class TestArbolGen {
         System.out.println(arb1.toString());
         System.out.println("EsVacio: "+arb1.esVacio());
         System.out.println("Pertenece: "+arb1.pertenece('G'));
-        System.out.println("Padre: "+arb1.padre('Z'));
+        System.out.println("Padre: "+arb1.padre('C'));
         System.out.println("Altura: "+arb1.altura());
         System.out.println("Nivel 'B': "+arb1.nivel('A'));
         System.out.println("Ancestros: "+arb1.ancestros('F'));
