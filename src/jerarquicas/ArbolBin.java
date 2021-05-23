@@ -334,6 +334,13 @@ public class ArbolBin {
     }
 
     public void cambiarHijos(Object izq, Object p, Object der) {
+        /*
+         * Recibe 3 elementos del mismo tipo que los cargados enm el arbol y debe
+         * modificar el arbol de la siguiente manera: si p (Padre) esta en el arbol, izq
+         * quedara como su hijo izquierdo y der como su hijo derecho. Si el padre no
+         * tiene hijo de ese lado, debe agregar un nodo para ponerlo y, si ya lo tiene,
+         * debe modificar el elemento dicho
+         */
         if (!esVacio()) {
             cambiarHijosAux(this.raiz, izq, p, der);
         }
@@ -358,7 +365,7 @@ public class ArbolBin {
                 }
             } else {
                 exito = cambiarHijosAux(nodo.getIzquierdo(), izq, p, der);
-                if(!exito){
+                if (!exito) {
                     exito = cambiarHijosAux(nodo.getDerecho(), izq, p, der);
                 }
             }
