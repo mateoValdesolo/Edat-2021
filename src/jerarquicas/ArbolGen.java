@@ -21,7 +21,7 @@ public class ArbolGen {
          * elemNuevo a la estructura y falso en caso contrario.
          */
         boolean exito = false;
-        if (this.raiz == null) {
+        if (esVacio()) {
             this.raiz = new NodoGen(elemNuevo, null, null);
             exito = true;
         } else {
@@ -63,20 +63,21 @@ public class ArbolGen {
     }
 
     private Object padreAux(NodoGen nodo, Object busc) {
-        Object padre = null;
+        Object resultado = null;
         if (nodo != null) {
-            NodoGen hijo = nodo.getHijoIzquierdo();
-            while (hijo != null && !hijo.getElem().equals(busc))
-                hijo = hijo.getHermanoDerecho();
-            if (hijo != null) {
-                padre = nodo.getElem();
-            } else {
-                padre = padreAux(nodo.getHijoIzquierdo(), busc);
-                if (padre == null)
-                    padre = padreAux(nodo.getHermanoDerecho(), busc);
+            if (!nodo.getElem().equals(busc)) {
+                NodoGen hijo = nodo.getHijoIzquierdo();
+                while (hijo != null && resultado == null) {
+                    if (hijo.getElem().equals(busc)) {
+                        resultado = nodo.getElem();
+                    } else {
+                        resultado = padreAux(hijo, busc);
+                        hijo = hijo.getHermanoDerecho();
+                    }
+                }
             }
         }
-        return padre;
+        return resultado;
     }
 
     public int altura() {
@@ -328,10 +329,27 @@ public class ArbolGen {
 
     public int grado() {
         /*
-         * Retorna el grado del arbol, cada nodo tiene un grado, que es el número de
-         * hijos (subárboles) que posee.
+         * Retorna el mayor grado del arbol, cada nodo tiene un grado, que es el número
+         * de hijos (subárboles) que posee.
          */
-        
+        int grado = -1;
+        if (!esVacio()) {
+            grado = gradoAux(this.raiz, 0);
+        }
+        return grado;
+    }
+
+    private int gradoAux(NodoGen nodo, int gradoRet) {
+        int grad = 0;
+        if (nodo != null && nodo.getHijoIzquierdo() != null) {
+            NodoGen hijo = nodo.getHijoIzquierdo();
+            while (hijo != null) {
+                grad++;
+                gradoRet = Math.max(grad, gradoAux(hijo, gradoRet));
+                hijo = hijo.getHermanoDerecho();
+            }
+        }
+        return gradoRet;
     }
 
     public int gradoSubarbol(Object elem) {
@@ -339,6 +357,11 @@ public class ArbolGen {
          * Retorna el grado del subarbol, cada nodo tiene un grado, que es el número de
          * hijos (subárboles) que posee.
          */
-
+        int grado = -1;
+        if (pertenece(elem)) {
+            NodoGen nodo = obtenerNodo(this.raiz, elem);
+            grado = gradoAux(nodo, 0);
+        }
+        return grado;
     }
 }
