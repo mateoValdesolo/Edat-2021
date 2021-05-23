@@ -236,19 +236,24 @@ public class Lista {
         return lis;
     }
 
-    public void insertarAnterior(Object elem1, Object elem2){
+    public void insertarAnterior(Object elem1, Object elem2) {
+        /*
+         * Busca todas las apariciones de elem1 en la lista, e inserta un nodo con elem2
+         * en la posicion anterior , si elem1 esta en la posicion 1, debe insertar a
+         * elem2 antes y despues de elem1
+         */
         Nodo aux = this.cabecera;
-        if(!esVacia()){
-            if(this.cabecera.getElem().equals(elem1)){
-                Nodo aux1 = new Nodo(elem2,aux);
+        if (!esVacia()) {
+            if (this.cabecera.getElem().equals(elem1)) {
+                Nodo aux1 = new Nodo(elem2, aux);
                 this.cabecera = aux1;
-                Nodo aux2 = new Nodo(elem2,aux.getEnlace());
+                Nodo aux2 = new Nodo(elem2, aux.getEnlace());
                 aux.setEnlace(aux2);
                 aux = aux2;
             }
             while (aux.getEnlace() != null) {
-                if(aux.getEnlace().getElem().equals(elem1)){
-                    Nodo aux1 = new Nodo(elem2,aux.getEnlace());
+                if (aux.getEnlace().getElem().equals(elem1)) {
+                    Nodo aux1 = new Nodo(elem2, aux.getEnlace());
                     aux.setEnlace(aux1);
                     aux = aux1;
                 }
