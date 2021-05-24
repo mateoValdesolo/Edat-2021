@@ -30,13 +30,11 @@ public class ArbolBB {
         } else {
             if (res < 0) {
                 if (nodo.getDerecho() != null) {
-                    nodo = nodo.getDerecho();
-                    exito = perteneceAux(nodo, elem);
+                    exito = perteneceAux(nodo.getDerecho(), elem);
                 }
             } else {
                 if (nodo.getIzquierdo() != null) {
-                    nodo = nodo.getIzquierdo();
-                    exito = perteneceAux(nodo, elem);
+                    exito = perteneceAux(nodo.getIzquierdo(), elem);
                 }
             }
         }
@@ -100,13 +98,31 @@ public class ArbolBB {
         return ret;
     }
 
-    private boolean eliminarAux(NodoABB nodo, Comparable elem) {
+    private boolean eliminarAux(NodoABB nodo, Comparable elem){
         int res = nodo.getElem().compareTo(elem);
-        if (res == 0) {
-            if (nodo.getDerecho() != null && nodo.getIzquierdo() != null) {
-
+        boolean ret = false;
+        if(nodo != null){
+            if(res == 0){
+                if(nodo.getDerecho() == null && nodo.getIzquierdo() == null){
+                    nodo = null;
+                    ret = true;
+                } else {
+                    if(nodo.getDerecho() != null){
+                        
+                    } else {
+                        
+                    }
+                }
+            } else {
+                if(res > 0){
+                    ret = eliminarAux(nodo.getIzquierdo(),elem);
+                } else {
+                    ret = eliminarAux(nodo.getDerecho(),elem);
+                }
             }
         }
+        
+        return ret;
     }
 
     public Lista listar() {
@@ -143,7 +159,7 @@ public class ArbolBB {
                 listarRangoAux(nodo.getIzquierdo(), minim, maxim, lis);
             }
             if(nodo.getElem().compareTo(minim) >= 0 && nodo.getElem().compareTo(maxim) <= 0){
-                lis.insertar(nodo.getElem(), lis.longitud()+1);
+                lis.insertar(nodo.getElem(), lis.longitud() + 1);
             }
             if(nodo.getElem().compareTo(maxim) < 0){
                 listarRangoAux(nodo.getDerecho(), minim, maxim, lis);
@@ -180,7 +196,6 @@ public class ArbolBB {
                 ret = nodo.getElem();
             }
             nodo = nodo.getDerecho();
-
         }
         return ret;
     }
@@ -195,6 +210,33 @@ public class ArbolBB {
 
     public void vaciar() {
         this.raiz = null;
+    }
+
+    public ArbolBB clone() {
+        /*
+         * Genera y devuelve un árbol binario que es equivalente (igual estructura y
+         * contenido de los nodos) que el árbol original.
+         */
+        ArbolBB clon = new ArbolBB();
+        if (!esVacio()) {
+            NodoABB nod = new NodoABB(this.raiz.getElem(), null, null);
+            clon.raiz = nod;
+            cloneAux(nod, this.raiz);
+        }
+        return clon;
+    }
+
+    private void cloneAux(NodoABB aux, NodoABB nodo) {
+        if (nodo != null) {
+            if (nodo.getIzquierdo() != null) {
+                aux.setIzquierdo(new NodoABB(nodo.getIzquierdo().getElem(), null, null));
+                cloneAux(aux.getIzquierdo(), nodo.getIzquierdo());
+            }
+            if (nodo.getDerecho() != null) {
+                aux.setDerecho(new NodoABB(nodo.getDerecho().getElem(), null, null));
+                cloneAux(aux.getDerecho(), nodo.getDerecho());
+            }
+        }
     }
 
     public String toString() {
