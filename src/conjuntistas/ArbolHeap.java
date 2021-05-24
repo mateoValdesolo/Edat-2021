@@ -67,12 +67,13 @@ public class ArbolHeap {
         /*
          * Vacia la estructura
          */
+        
     }
 
     private void hacerBajar(int posPadre) {
         /* 
          * Empuja el elemento que se colocó temporalmente en la raíz, intercambiándolo
-         * repetidamente por el menor de sus hijos 
+         * repetidamente por el menor de sus hijos. 
          */
         int posH;
         Comparable temp = this.heap[posPadre];
@@ -81,7 +82,7 @@ public class ArbolHeap {
             posH = posPadre * 2;
             if (posH <= this.ultimo) {
                 // temp tiene al menos un hijo (izq) y lo considera menor.
-                 if(pos H < this.ultimo){
+                 if(posH < this.ultimo){
                     //hijoMenor tiene hermano derecho
                     if(this.heap[posH + 1].compareTo(this.heap[posH]) < 0){
                         //El hijo derecho es el menor de los dos.
