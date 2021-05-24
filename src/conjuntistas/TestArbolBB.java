@@ -19,11 +19,11 @@ public class TestArbolBB {
         arb1.insertar(64);
         arb1.insertar(72);
         arb1.insertar(80);
-        System.out.println(arb1.listar());
-        System.out.println(arb1.maximoElem());
-        System.out.println(arb1.minimoElem());
-        System.out.println(arb1.pertenece(26));
-        System.out.println(arb1.toString());
-        System.out.println(arb1.listarRango(8, 50));
+        System.out.println("Listar: "+arb1.listar());
+        System.out.println("MaximoElem: "+arb1.maximoElem());
+        System.out.println("MinimoElem: "+arb1.minimoElem());
+        System.out.println("43 Pertenece: "+arb1.pertenece(43));
+        System.out.println("ToString: "+arb1.toString());
+        System.out.println("ListarRango [8,50]"+arb1.listarRango(8, 50));
     }
 }
