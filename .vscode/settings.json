@@ -1,5 +1,7 @@
 {
     "java.project.sourcePaths": [
         "src"
-    ]
+    ],
+    "editor.codeActionsOnSave": null,
+    "editor.quickSuggestions": null
 }
