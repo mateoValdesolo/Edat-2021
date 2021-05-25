@@ -100,7 +100,7 @@ public class ArbolBB {
 
     private boolean eliminarAux(NodoABB nodo, Comparable elem, NodoABB padre, boolean salir) {
         int res = nodo.getElem().compareTo(elem);
-        boolean ret = false;
+        boolean ret = true;
         if (nodo != null && !salir) {
             if (res == 0) {
                 // Caso 1: Sin hijos.
@@ -115,7 +115,7 @@ public class ArbolBB {
                         if (nodo.getIzquierdo() != null && nodo.getDerecho() == null) {
                             caso2(nodo, padre, 'I');
                         } else {
-                            // caso3();
+                            caso3(nodo);
                         }
                     }
                     salir = true;
@@ -162,9 +162,26 @@ public class ArbolBB {
         }
     }
 
-    private void caso3(){
+    private void caso3(NodoABB nodo){
         //Eliminacion con dos hijos.
-               
+        NodoABB aux, aux2 = null, padr = null;
+        if(nodo.getIzquierdo().getDerecho() == null){
+            nodo.setElem(nodo.getIzquierdo().getElem());
+            nodo.setIzquierdo(nodo.getIzquierdo().getIzquierdo());
+        } else {
+            aux = nodo.getIzquierdo();
+            while(aux != null){
+                if (aux.getDerecho() == null) {
+                    aux2 = aux;
+                    aux = null;
+                } else {
+                    padr = aux;
+                    aux = aux.getDerecho();
+                }
+            }
+            nodo.setElem(aux2.getElem());
+            padr.setDerecho(null);
+        }
     }
 
     public Lista listar() {
