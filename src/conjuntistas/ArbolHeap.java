@@ -19,10 +19,14 @@ public class ArbolHeap {
          * verdadero y falso en caso contrario.
          */
         boolean exito = false;
-        if (this.ultimo < this.TAMANIO - 1) {
-            this.heap[this.ultimo + 1] = elem;
-
+        if (this.ultimo + 1 > this.TAMANIO) {
+            exito = false;
+        } else {
             this.ultimo++;
+            this.heap[ultimo] = elem;
+            if (!esVacio()) {
+                hacerSubir(ultimo);
+            }
             exito = true;
         }
         return exito;
@@ -67,13 +71,16 @@ public class ArbolHeap {
         /*
          * Vacia la estructura
          */
-        
+        for (int i = 0; i <= this.ultimo; i++) {
+            this.heap[i] = null;
+        }
+        this.ultimo = 0;
     }
 
     private void hacerBajar(int posPadre) {
-        /* 
+        /*
          * Empuja el elemento que se colocó temporalmente en la raíz, intercambiándolo
-         * repetidamente por el menor de sus hijos. 
+         * repetidamente por el menor de sus hijos.
          */
         int posH;
         Comparable temp = this.heap[posPadre];
@@ -82,48 +89,66 @@ public class ArbolHeap {
             posH = posPadre * 2;
             if (posH <= this.ultimo) {
                 // temp tiene al menos un hijo (izq) y lo considera menor.
-                 if(posH < this.ultimo){
-                    //hijoMenor tiene hermano derecho
-                    if(this.heap[posH + 1].compareTo(this.heap[posH]) < 0){
-                        //El hijo derecho es el menor de los dos.
+                if (posH < this.ultimo) {
+                    // hijoMenor tiene hermano derecho
+                    if (this.heap[posH + 1].compareTo(this.heap[posH]) < 0) {
+                        // El hijo derecho es el menor de los dos.
                         posH++;
                     }
-                 }
-                 //Compara al hijo menor con el padre.
-                 if(this.heap[posH].compareTo(temp) < 0){
-                    //El hijo es menor que el padre, los intercambia.
+                }
+                // Compara al hijo menor con el padre.
+                if (this.heap[posH].compareTo(temp) < 0) {
+                    // El hijo es menor que el padre, los intercambia.
                     this.heap[posPadre] = this.heap[posH];
                     this.heap[posH] = temp;
                     posPadre = posH;
-                 } else {
-                     //El padre es meno que sus hijos, esta bien ubicado.
-                     salir = true;
-                 }
+                } else {
+                    // El padre es meno que sus hijos, esta bien ubicado.
+                    salir = true;
+                }
             } else {
-                //El temp es una hoja, esta bien ubicado.
+                // El temp es una hoja, esta bien ubicado.
                 salir = true;
             }
         }
     }
 
     private void hacerSubir(int posElem) {
-
+        int posPadre = 1;
+        boolean salir = false;
+        while (!salir) {
+            posPadre = posElem / 2;
+            Comparable temp = this.heap[posPadre];
+            if (posPadre > 0) {
+                if (this.heap[posElem].compareTo(this.heap[posPadre]) < 0) {
+                    this.heap[posPadre] = this.heap[posElem];
+                    this.heap[posElem] = temp;
+                    posElem = posPadre;
+                } else {
+                    salir = true;
+                }
+            } else {
+                salir = true;
+            }
+        }
     }
 
+    
+
     public String toString() {
-        String ret = "";
-        for (int i = 1; i <= ultimo; i++) {
-            ret += "Padre: " + this.heap[i];
-            if (i * 2 <= this.ultimo) {
-                ret += " HI: " + this.heap[i * 2];
-            } else {
-                ret += " HI: - ";
+        // Devuelve la pila en un string
+        String ret = "[";
+        if (esVacio()) {
+            ret = "[]";
+        } else {
+            for (int i = 1; i <= this.ultimo; i++) {
+                if(i == this.ultimo){
+                    ret = ret + this.heap[i];
+                } else {
+                    ret = ret + this.heap[i] + ", ";
+                }
             }
-            if ((i * 2) + 1 <= this.ultimo) {
-                ret += " HD : " + this.heap[(i * 2) + 1] + "\n";
-            } else {
-                ret += " HD : - \n";
-            }
+            ret += "]";
         }
         return ret;
     }
