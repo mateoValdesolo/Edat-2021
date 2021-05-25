@@ -5,7 +5,7 @@ public class TestArbolBB {
     public static void main(String[] args) {
         ArbolBB arb1 = new ArbolBB();
         ArbolBB arb2, arb3 = new ArbolBB();
-        /*arb1.insertar(32);
+        arb1.insertar(32);
         arb1.insertar(9);
         arb1.insertar(56);
         arb1.insertar(5);
@@ -30,16 +30,22 @@ public class TestArbolBB {
         arb2 = arb1.clone();
         System.out.println("Clone: "+arb2.toString());
         arb2.vaciar();
-        System.out.println("Clone despues de vaciar: "+arb1.toString());*/
-        arb3.insertar(50);
-        arb3.insertar(20);
-        arb3.insertar(65);
-        arb3.insertar(15);
-        arb3.insertar(75);
+        System.out.println("Clone despues de vaciar: "+arb1.toString());
+        System.out.println("32 Pertenece: "+arb1.pertenece(32));
+        System.out.println("Elimino el 56");
+        System.out.println(arb1.eliminar(56));
+        System.out.println("ToString: "+arb1.toString());
+        /*arb3.insertar(50);
+        arb3.insertar(45);
+        arb3.insertar(60);
+        arb3.insertar(30);
+        arb3.insertar(67);
+        arb3.insertar(32);
+        arb3.insertar(63);
         
         System.out.println("ToString: "+arb3.toString());
-        arb3.eliminar(65);
-        System.out.println("ToString: "+arb3.toString());
+        arb3.eliminar(30);
+        System.out.println("ToString: "+arb3.toString());*/
 
         
     }
