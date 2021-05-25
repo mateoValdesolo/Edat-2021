@@ -93,36 +93,68 @@ public class ArbolBB {
          */
         boolean ret = false;
         if (!esVacio()) {
-            ret = eliminarAux(this.raiz, elem);
+            ret = eliminarAux(this.raiz, elem, null);
         }
         return ret;
     }
 
-    private boolean eliminarAux(NodoABB nodo, Comparable elem){
+    private boolean eliminarAux(NodoABB nodo, Comparable elem, NodoABB padre) {
         int res = nodo.getElem().compareTo(elem);
         boolean ret = false;
-        if(nodo != null){
-            if(res == 0){
-                if(nodo.getDerecho() == null && nodo.getIzquierdo() == null){
-                    nodo = null;
-                    ret = true;
+        if (nodo != null) {
+            if (res == 0) {
+                // Caso 1: Sin hijos.
+                if (nodo.getDerecho() == null && nodo.getIzquierdo() == null) {
+                    caso1(padre,elem);
                 } else {
-                    if(nodo.getDerecho() != null){
-                        
+                    // Caso 2: Con hijo derecho.
+                    if (nodo.getDerecho() != null && nodo.getIzquierdo() == null) {
+                        caso2(nodo,padre,'D');
                     } else {
-                        
+                        if(nodo.getIzquierdo() != null && nodo.getDerecho() == null){
+                            caso2(nodo,padre,'I');
+                        } else {
+                            //caso3();
+                        }
                     }
                 }
             } else {
-                if(res > 0){
-                    ret = eliminarAux(nodo.getIzquierdo(),elem);
+                padre = nodo;
+                if (res > 0) {
+                    ret = eliminarAux(nodo.getIzquierdo(), elem, padre);
                 } else {
-                    ret = eliminarAux(nodo.getDerecho(),elem);
+                    ret = eliminarAux(nodo.getDerecho(), elem, padre);
                 }
             }
         }
-        
         return ret;
+    }
+
+    private void caso1(NodoABB padre, Comparable elem) {
+        // Eliminacion de hoja.
+        if (padre == null) {
+            this.raiz = null;
+        } else {
+            if (padre.getDerecho().getElem().compareTo(elem) == 0) {
+                padre.setDerecho(null);
+            } else {
+                padre.setIzquierdo(null);
+            }
+        }
+    }
+
+    private void caso2(NodoABB nodo, NodoABB padre, char pos){
+        // Eliminacion con 1 hijo.
+        if(padre.getIzquierdo().getElem().compareTo(nodo.getElem()) == 0 && pos == 'D'){
+            padre.setIzquierdo(nodo.getDerecho());
+        } else {
+            padre.setDerecho(nodo.getDerecho());
+        }
+        if(padre.getIzquierdo().getElem().compareTo(nodo.getElem()) == 0 && pos == 'I'){
+            padre.setIzquierdo(nodo.getIzquierdo());
+        } else {
+            padre.setDerecho(nodo.getIzquierdo());
+        }
     }
 
     public Lista listar() {
@@ -155,13 +187,13 @@ public class ArbolBB {
 
     private void listarRangoAux(NodoABB nodo, Comparable minim, Comparable maxim, Lista lis) {
         if (nodo != null) {
-            if(nodo.getElem().compareTo(minim) > 0){
+            if (nodo.getElem().compareTo(minim) > 0) {
                 listarRangoAux(nodo.getIzquierdo(), minim, maxim, lis);
             }
-            if(nodo.getElem().compareTo(minim) >= 0 && nodo.getElem().compareTo(maxim) <= 0){
+            if (nodo.getElem().compareTo(minim) >= 0 && nodo.getElem().compareTo(maxim) <= 0) {
                 lis.insertar(nodo.getElem(), lis.longitud() + 1);
             }
-            if(nodo.getElem().compareTo(maxim) < 0){
+            if (nodo.getElem().compareTo(maxim) < 0) {
                 listarRangoAux(nodo.getDerecho(), minim, maxim, lis);
             }
 
@@ -280,7 +312,6 @@ public class ArbolBB {
             str = toStringAux(der, str);
         }
         return str;
-
     }
 
 }
