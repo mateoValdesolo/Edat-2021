@@ -92,38 +92,40 @@ public class ArbolBB {
          * contrario.
          */
         boolean ret = false;
-        if (!esVacio()) {
-            ret = eliminarAux(this.raiz, elem, null);
+        if (pertenece(elem)) {
+            ret = eliminarAux(this.raiz, elem, null, false);
         }
         return ret;
     }
 
-    private boolean eliminarAux(NodoABB nodo, Comparable elem, NodoABB padre) {
+    private boolean eliminarAux(NodoABB nodo, Comparable elem, NodoABB padre, boolean salir) {
         int res = nodo.getElem().compareTo(elem);
         boolean ret = false;
-        if (nodo != null) {
+        if (nodo != null && !salir) {
             if (res == 0) {
                 // Caso 1: Sin hijos.
                 if (nodo.getDerecho() == null && nodo.getIzquierdo() == null) {
-                    caso1(padre,elem);
+                    caso1(padre, elem);
+                    salir = true;
                 } else {
                     // Caso 2: Con hijo derecho.
                     if (nodo.getDerecho() != null && nodo.getIzquierdo() == null) {
-                        caso2(nodo,padre,'D');
+                        caso2(nodo, padre, 'D');
                     } else {
-                        if(nodo.getIzquierdo() != null && nodo.getDerecho() == null){
-                            caso2(nodo,padre,'I');
+                        if (nodo.getIzquierdo() != null && nodo.getDerecho() == null) {
+                            caso2(nodo, padre, 'I');
                         } else {
-                            //caso3();
+                            // caso3();
                         }
                     }
+                    salir = true;
                 }
             } else {
                 padre = nodo;
                 if (res > 0) {
-                    ret = eliminarAux(nodo.getIzquierdo(), elem, padre);
+                    ret = eliminarAux(nodo.getIzquierdo(), elem, padre, salir);
                 } else {
-                    ret = eliminarAux(nodo.getDerecho(), elem, padre);
+                    ret = eliminarAux(nodo.getDerecho(), elem, padre, salir);
                 }
             }
         }
@@ -143,18 +145,26 @@ public class ArbolBB {
         }
     }
 
-    private void caso2(NodoABB nodo, NodoABB padre, char pos){
+    private void caso2(NodoABB nodo, NodoABB padre, char pos) {
         // Eliminacion con 1 hijo.
-        if(padre.getIzquierdo().getElem().compareTo(nodo.getElem()) == 0 && pos == 'D'){
-            padre.setIzquierdo(nodo.getDerecho());
+        if (pos == 'D') {
+            if (padre.getIzquierdo() != null && padre.getIzquierdo().getElem().compareTo(nodo.getElem()) == 0) {
+                padre.setIzquierdo(nodo.getDerecho());
+            } else {
+                padre.setDerecho(nodo.getDerecho());
+            }
         } else {
-            padre.setDerecho(nodo.getDerecho());
+            if (padre.getIzquierdo() != null && padre.getIzquierdo().getElem().compareTo(nodo.getElem()) == 0) {
+                padre.setIzquierdo(nodo.getIzquierdo());
+            } else {
+                padre.setDerecho(nodo.getIzquierdo());
+            }
         }
-        if(padre.getIzquierdo().getElem().compareTo(nodo.getElem()) == 0 && pos == 'I'){
-            padre.setIzquierdo(nodo.getIzquierdo());
-        } else {
-            padre.setDerecho(nodo.getIzquierdo());
-        }
+    }
+
+    private void caso3(){
+        //Eliminacion con dos hijos.
+               
     }
 
     public Lista listar() {
