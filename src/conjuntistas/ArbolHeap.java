@@ -133,8 +133,6 @@ public class ArbolHeap {
         }
     }
 
-    
-
     public String toString() {
         // Devuelve la pila en un string
         String ret = "[";
@@ -142,7 +140,7 @@ public class ArbolHeap {
             ret = "[]";
         } else {
             for (int i = 1; i <= this.ultimo; i++) {
-                if(i == this.ultimo){
+                if (i == this.ultimo) {
                     ret = ret + this.heap[i];
                 } else {
                     ret = ret + this.heap[i] + ", ";
