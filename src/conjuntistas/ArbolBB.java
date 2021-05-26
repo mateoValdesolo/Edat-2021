@@ -93,39 +93,38 @@ public class ArbolBB {
          */
         boolean ret = false;
         if (pertenece(elem)) {
-            ret = eliminarAux(this.raiz, elem, null, false);
+            ret = eliminarAux(this.raiz, elem, null);
         }
         return ret;
     }
 
-    private boolean eliminarAux(NodoABB nodo, Comparable elem, NodoABB padre, boolean salir) {
+    private boolean eliminarAux(NodoABB nodo, Comparable elem, NodoABB padre) {
         int res = nodo.getElem().compareTo(elem);
         boolean ret = true;
-        if (nodo != null && !salir) {
+        if (nodo != null) {
             if (res == 0) {
                 // Caso 1: Sin hijos.
                 if (nodo.getDerecho() == null && nodo.getIzquierdo() == null) {
                     caso1(padre, elem);
-                    salir = true;
                 } else {
-                    // Caso 2: Con hijo derecho.
+                    // Caso 2: Con hijo derecho o izquierdo.
                     if (nodo.getDerecho() != null && nodo.getIzquierdo() == null) {
                         caso2(nodo, padre, 'D');
                     } else {
                         if (nodo.getIzquierdo() != null && nodo.getDerecho() == null) {
                             caso2(nodo, padre, 'I');
                         } else {
+                            // Caso 3: con ambos hijos.
                             caso3(nodo);
                         }
                     }
-                    salir = true;
                 }
             } else {
                 padre = nodo;
                 if (res > 0) {
-                    ret = eliminarAux(nodo.getIzquierdo(), elem, padre, salir);
+                    ret = eliminarAux(nodo.getIzquierdo(), elem, padre);
                 } else {
-                    ret = eliminarAux(nodo.getDerecho(), elem, padre, salir);
+                    ret = eliminarAux(nodo.getDerecho(), elem, padre);
                 }
             }
         }
@@ -147,6 +146,19 @@ public class ArbolBB {
 
     private void caso2(NodoABB nodo, NodoABB padre, char pos) {
         // Eliminacion con 1 hijo.
+        /*if(padre.getIzquierdo() != null && padre.getIzquierdo().getElem().compareTo(nodo.getElem()) == 0){
+            if (pos == 'D'){
+                padre.setIzquierdo(nodo.getDerecho());
+            } else {
+                padre.setIzquierdo(nodo.getIzquierdo());
+            }
+        }else {
+            if (pos == 'D'){
+                padre.setDerecho(nodo.getDerecho());
+            } else {
+                padre.setDerecho(nodo.getIzquierdo());
+            }
+        }*/
         if (pos == 'D') {
             if (padre.getIzquierdo() != null && padre.getIzquierdo().getElem().compareTo(nodo.getElem()) == 0) {
                 padre.setIzquierdo(nodo.getDerecho());
@@ -162,26 +174,21 @@ public class ArbolBB {
         }
     }
 
-    private void caso3(NodoABB nodo){
-        //Eliminacion con dos hijos.
+    private void caso3(NodoABB nodo) {
+        // Eliminacion con dos hijos.
         NodoABB aux, aux2 = null, padr = null;
-        if(nodo.getIzquierdo().getDerecho() == null){
+        if (nodo.getIzquierdo().getDerecho() == null) {
             nodo.setElem(nodo.getIzquierdo().getElem());
             nodo.setIzquierdo(nodo.getIzquierdo().getIzquierdo());
         } else {
             aux = nodo.getIzquierdo();
-            while(aux != null){
-                if (aux.getDerecho() == null) {
-                    aux2 = aux;
-                    aux = null;
-                } else {
-                    padr = aux;
-                    aux = aux.getDerecho();
-                }
+            while (aux.getDerecho() != null) {
+                padr = aux;
+                aux = aux.getDerecho();
             }
-            nodo.setElem(aux2.getElem());
             padr.setDerecho(null);
-        }
+            nodo.setElem(aux.getElem());
+        }  
     }
 
     public Lista listar() {
@@ -232,15 +239,11 @@ public class ArbolBB {
          * Recorre la rama correspondiente y devuelve el elemento más pequeño almacenado
          * en el árbol.
          */
-        Comparable ret = null;
         NodoABB nodo = this.raiz;
-        while (nodo != null) {
-            if (nodo.getIzquierdo() == null) {
-                ret = nodo.getElem();
-            }
+        while (nodo.getIzquierdo() != null) {
             nodo = nodo.getIzquierdo();
         }
-        return ret;
+        return nodo.getElem();
     }
 
     public Comparable maximoElem() {
@@ -248,15 +251,11 @@ public class ArbolBB {
          * Recorre la rama correspondiente y devuelve el elemento más grande almacenado
          * en el árbol.
          */
-        Comparable ret = null;
         NodoABB nodo = this.raiz;
-        while (nodo != null) {
-            if (nodo.getDerecho() == null) {
-                ret = nodo.getElem();
-            }
+        while (nodo.getDerecho() != null) {
             nodo = nodo.getDerecho();
         }
-        return ret;
+        return nodo.getElem();
     }
 
     public boolean esVacio() {
@@ -333,7 +332,6 @@ public class ArbolBB {
                         }
                     }
                 }
-
             }
             str = toStringAux(izq, str);
             str = toStringAux(der, str);
