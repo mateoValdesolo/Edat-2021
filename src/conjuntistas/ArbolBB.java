@@ -146,19 +146,14 @@ public class ArbolBB {
 
     private void caso2(NodoABB nodo, NodoABB padre, char pos) {
         // Eliminacion con 1 hijo.
-        /*if(padre.getIzquierdo() != null && padre.getIzquierdo().getElem().compareTo(nodo.getElem()) == 0){
-            if (pos == 'D'){
-                padre.setIzquierdo(nodo.getDerecho());
-            } else {
-                padre.setIzquierdo(nodo.getIzquierdo());
-            }
-        }else {
-            if (pos == 'D'){
-                padre.setDerecho(nodo.getDerecho());
-            } else {
-                padre.setDerecho(nodo.getIzquierdo());
-            }
-        }*/
+        /*
+         * if(padre.getIzquierdo() != null &&
+         * padre.getIzquierdo().getElem().compareTo(nodo.getElem()) == 0){ if (pos ==
+         * 'D'){ padre.setIzquierdo(nodo.getDerecho()); } else {
+         * padre.setIzquierdo(nodo.getIzquierdo()); } }else { if (pos == 'D'){
+         * padre.setDerecho(nodo.getDerecho()); } else {
+         * padre.setDerecho(nodo.getIzquierdo()); } }
+         */
         if (pos == 'D') {
             if (padre.getIzquierdo() != null && padre.getIzquierdo().getElem().compareTo(nodo.getElem()) == 0) {
                 padre.setIzquierdo(nodo.getDerecho());
@@ -188,7 +183,7 @@ public class ArbolBB {
             }
             padr.setDerecho(null);
             nodo.setElem(aux.getElem());
-        }  
+        }
     }
 
     public Lista listar() {
@@ -230,7 +225,6 @@ public class ArbolBB {
             if (nodo.getElem().compareTo(maxim) < 0) {
                 listarRangoAux(nodo.getDerecho(), minim, maxim, lis);
             }
-
         }
     }
 
@@ -267,6 +261,9 @@ public class ArbolBB {
     }
 
     public void vaciar() {
+        /*
+         * Vacia la estructura.
+         */
         this.raiz = null;
     }
 
