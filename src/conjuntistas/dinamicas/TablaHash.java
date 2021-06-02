@@ -1,11 +1,9 @@
-package conjuntistas;
-
-import java.util.HashSet;
-import java.util.Stack;
+package conjuntistas.dinamicas;
 
 import lineales.dinamicas.Lista;
 
 public class TablaHash {
+    //Hash Abierto
 
     private static final int TAMANIO = 20;
     private Nodo[] tabla;

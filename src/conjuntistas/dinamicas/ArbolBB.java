@@ -1,4 +1,4 @@
-package conjuntistas;
+package conjuntistas.dinamicas;
 
 import lineales.dinamicas.Lista;
 

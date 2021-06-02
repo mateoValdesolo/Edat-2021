@@ -364,4 +364,56 @@ public class ArbolGen {
         }
         return grado;
     }
+
+    public boolean verificarCamino(Lista lis) {
+        /*
+         * Dada una lista, verifica si la misma corresponde a un camino desde la raíz
+         * hasta algún elemento del árbol.
+         */
+        boolean ret = false;
+        if (!esVacio()) {
+            ret = verificarCaminoAux(this.raiz, lis, 1);
+        }
+        return ret;
+    }
+
+    private boolean verificarCaminoAux(NodoGen nodo, Lista lis, int cont) {
+        boolean exito = true, encontrado = false;
+        if (nodo != null && exito) {
+            if (nodo.equals(lis.recuperar(cont))) {
+                cont++;
+                if (nodo.getHijoIzquierdo() != null) {
+                    if (nodo.getHijoIzquierdo().getElem().equals(lis.recuperar(cont))) {
+                        exito = verificarCaminoAux(nodo.getHijoIzquierdo(), lis, cont);
+                    } else {
+                        NodoGen aux = nodo.getHijoIzquierdo();
+                        while (!encontrado && aux.getHermanoDerecho() != null) {
+                            if (aux.getHermanoDerecho().getElem().equals(lis.recuperar(cont))) {
+                                cont++;
+                                exito = verificarCaminoAux(aux.getHijoIzquierdo(), lis, cont);
+                            }
+                            if (cont == lis.longitud() + 1) {
+                                encontrado = true;
+                            }
+                        }
+                    }
+                } else {
+                    exito = false;
+                }
+            }
+        }
+        return exito;
+    }
+
+    public Lista listarEntreNiveles(int niv1, int niv2) {
+        Lista lis = new Lista()
+        if(!esVacio()){
+            listarEntreNivelesAux(this.raiz,niv1, niv2, lis);
+        }
+        return lis;
+    }
+
+    private void listarEntreNivelesAux() {
+
+    }
 }

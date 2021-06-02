@@ -1,4 +1,4 @@
-package conjuntistas;
+package conjuntistas.dinamicas;
 
 public class Nodo {
     
