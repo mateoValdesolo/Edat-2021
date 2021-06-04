@@ -44,12 +44,12 @@ public class NodoAVL {
 
     public void recalcularAltura() {
         int izq = -1, der = -1;
-        if (izquierdo != null) {
+        if (this.izquierdo != null) {
             izq = this.izquierdo.altura;
         }
-        if (derecho != null) {
+        if (this.derecho != null) {
             izq = this.derecho.altura;
         }
-        this.altura = Math.max(izq, der) + 1;
+        this.altura = (Math.max(izq, der)) + 1;
     }
 }
