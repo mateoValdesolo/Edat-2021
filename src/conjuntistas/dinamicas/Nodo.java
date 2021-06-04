@@ -18,6 +18,10 @@ public class Nodo {
         this.enlace = enlace;
     }
 
+    public Nodo getEnlace(){
+        return this.enlace;
+    }
+
     public Object getElem(){
         return this.elem;
     }
