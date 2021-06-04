@@ -43,11 +43,39 @@ public class ArbolAVL {
 
     public boolean insertar(Comparable elem) {
         boolean exito = false;
-        if(this.raiz == null){
-            this.raiz = new NodoAVL(elem,null,null);
+        if (esVacio()) {
+            this.raiz = new NodoAVL(elem, null, null);
             exito = true;
         } else {
+            exito = insertarAux(this.raiz, elem);
+        }
+        return exito;
+    }
 
+    private boolean insertarAux(NodoAVL nodo, Comparable elem) {
+        boolean exito = true;
+        int compar = elem.compareTo(nodo.getElem());
+        if (compar == 0) {
+            // Elemento repetido
+            exito = false;
+        } else {
+            if (compar < 0) {
+                // Elem es menor a nodo.getElem()
+                // Si tiene HI baja a la izquierda, sino agrega elem
+                if (nodo.getIzquierdo() != null) {
+                    exito = insertarAux(nodo.getIzquierdo(), elem);
+                } else {
+                    nodo.setIzquierdo(new NodoAVL(elem, null, null));
+                }
+            } else {
+                // Elemento mayor que nodo.getElem()
+                // Si tiene HD baja a la derecha, sino agrega elemento
+                if (nodo.getDerecho() != null) {
+                    exito = insertarAux(nodo.getDerecho(), elem);
+                } else {
+                    nodo.setDerecho(new NodoAVL(elem, null, null));
+                }
+            }
         }
         return exito;
     }
@@ -56,33 +84,86 @@ public class ArbolAVL {
 
     }
 
+    private int balance(NodoAVL nodo, NodoAVL padre) {
+        int balance = -1, altIzq = -1, altDer = -1;
+        if (nodo != null) {
+            if (nodo.getIzquierdo() != null) {
+                altIzq = nodo.getIzquierdo().getAltura();
+            }
+            if (nodo.getDerecho() != null) {
+                altDer = nodo.getDerecho().getAltura();
+            }
+            balance = altIzq - altDer;
+            if (Math.abs(balance) == 2) {
+                balancear(balance, nodo, padre);
+            }
+        }
+        return balance;
+    }
 
-    private NodoAVL rotarIzquierda(NodoAVL r){
+    private void balancear(int balance, NodoAVL nodo, NodoAVL padre) {
+        int balanceHijo;
+        if (balance == 2) {
+            balanceHijo = balance(nodo.getIzquierdo(), nodo);
+            if (balanceHijo == 1 || balanceHijo == 0) {
+                if (padre == null) {
+                    this.raiz = rotarDerecha(nodo);
+                } else {
+                    padre.setDerecho(rotarDerecha(nodo));
+                }
+            } else {
+                if (padre == null) {
+                    this.raiz = rotacionIzquierdaDerecha(nodo);
+                } else {
+                    padre.setIzquierdo(rotacionIzquierdaDerecha(nodo));
+                }
+            }
+        } else {
+            if (balance == -2) {
+                balanceHijo = balance(nodo.getDerecho(), nodo);
+                if (balanceHijo == 1 || balanceHijo == 0) {
+                    if (padre == null) {
+                        this.raiz = rotarIzquierda(nodo);
+                    } else {
+                        padre.setDerecho(rotarIzquierda(nodo));
+                    }
+                } else {
+                    if (padre == null) {
+                        this.raiz = rotacionDerechaIzquierda(nodo);
+                    } else {
+                        padre.setDerecho(rotacionDerechaIzquierda(nodo));
+                    }
+                }
+            }
+        }
+    }
+
+    private NodoAVL rotarIzquierda(NodoAVL r) {
         NodoAVL h = r.getDerecho();
         NodoAVL temp = h.getIzquierdo();
         h.setIzquierdo(r);
         r.setDerecho(temp);
-        h.recalcularAltura();
         r.recalcularAltura();
+        h.recalcularAltura();
         return h;
     }
 
-    private NodoAVL rotarDerecha(NodoAVL r){
+    private NodoAVL rotarDerecha(NodoAVL r) {
         NodoAVL h = r.getIzquierdo();
         NodoAVL temp = h.getDerecho();
         h.setDerecho(r);
         r.setIzquierdo(temp);
-        h.recalcularAltura();
         r.recalcularAltura();
+        h.recalcularAltura();
         return h;
     }
 
-    private NodoAVL rotacionIzquierdaDerecha(NodoAVL r){
+    private NodoAVL rotacionIzquierdaDerecha(NodoAVL r) {
         r.setIzquierdo(rotarIzquierda(r.getIzquierdo()));
         return rotarDerecha(r);
     }
 
-    private NodoAVL rotacionDerechaIzquierda(NodoAVL r){
+    private NodoAVL rotacionDerechaIzquierda(NodoAVL r) {
         r.setDerecho(rotarDerecha(r.getDerecho()));
         return rotarIzquierda(r);
     }
