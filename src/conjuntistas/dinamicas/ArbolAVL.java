@@ -42,11 +42,49 @@ public class ArbolAVL {
     }
 
     public boolean insertar(Comparable elem) {
+        boolean exito = false;
+        if(this.raiz == null){
+            this.raiz = new NodoAVL(elem,null,null);
+            exito = true;
+        } else {
 
+        }
+        return exito;
     }
 
     public boolean eliminar(Comparable elem) {
 
+    }
+
+
+    private NodoAVL rotarIzquierda(NodoAVL r){
+        NodoAVL h = r.getDerecho();
+        NodoAVL temp = h.getIzquierdo();
+        h.setIzquierdo(r);
+        r.setDerecho(temp);
+        h.recalcularAltura();
+        r.recalcularAltura();
+        return h;
+    }
+
+    private NodoAVL rotarDerecha(NodoAVL r){
+        NodoAVL h = r.getIzquierdo();
+        NodoAVL temp = h.getDerecho();
+        h.setDerecho(r);
+        r.setIzquierdo(temp);
+        h.recalcularAltura();
+        r.recalcularAltura();
+        return h;
+    }
+
+    private NodoAVL rotacionIzquierdaDerecha(NodoAVL r){
+        r.setIzquierdo(rotarIzquierda(r.getIzquierdo()));
+        return rotarDerecha(r);
+    }
+
+    private NodoAVL rotacionDerechaIzquierda(NodoAVL r){
+        r.setDerecho(rotarDerecha(r.getDerecho()));
+        return rotarIzquierda(r);
     }
 
     public Lista listar() {
