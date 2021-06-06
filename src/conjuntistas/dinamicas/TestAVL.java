@@ -3,7 +3,7 @@ package conjuntistas.dinamicas;
 public class TestAVL {
     
     public static void main(String[] args) {
-        ArbolAVL arb1 = new ArbolAVL();
+        ArbolAVL arb1 = new ArbolAVL(), arb2 = new ArbolAVL();
 
         arb1.insertar(4);
         arb1.insertar(2);
@@ -14,14 +14,17 @@ public class TestAVL {
         System.out.println("Inserto el 5: ");
         arb1.insertar(5);
         System.out.println(arb1.toString());
-        /*arb1.insertar('f');
-        arb1.insertar('d');
-        arb1.insertar('g');
-        arb1.insertar('b');
-        arb1.insertar('e');
-        arb1.insertar('a');
-        arb1.insertar('c');
-        System.out.println(arb1.toString());*/
 
+        arb2.insertar(16);
+        arb2.insertar(10);
+        arb2.insertar(24);
+        arb2.insertar(7);
+        arb2.insertar(18);
+        arb2.insertar(26);
+        arb2.insertar(22);
+        System.out.println(arb2.toString());
+        System.out.println("Inserto el 20: ");
+        arb2.insertar(20);
+        System.out.println(arb2.toString());
     }
 }
