@@ -336,4 +336,112 @@ public class ArbolBB {
         return str;
     }
 
+    public int diferenciaCandidatos(Comparable elem) {
+        /*
+         * Retorna la diferencia entre el menor elemento del lado derecho y el mayor del
+         * lado izquierdo, del subarbol cuya raiz es el elemento pasado por parametro.
+         * Si el elemento no existe, retorna -1, y si alguno de los subarboles es nulo
+         * retorna -2.
+         */
+        int ret = -1;
+        if (pertenece(elem)) {
+            ret = diferenciaCandidatosAux(this.raiz, elem);
+        }
+        return ret;
+    }
+
+    private int diferenciaCandidatosAux(NodoABB nodo, Comparable elem) {
+        int ret = -2, compar, maxIzq, minDer;
+        if (nodo != null) {
+            compar = elem.compareTo(nodo.getElem());
+            if (compar == 0) {
+                if (nodo.getDerecho() != null && nodo.getIzquierdo() != null) {
+                    NodoABB aux = nodo.getIzquierdo(), aux1 = nodo.getDerecho();
+                    while (aux.getDerecho() != null) {
+                        aux = aux.getDerecho();
+                    }
+                    while (aux1.getIzquierdo() != null) {
+                        aux1 = aux1.getIzquierdo();
+                    }
+                    maxIzq = (int) aux.getElem();
+                    minDer = (int) aux1.getElem();
+                    ret = maxIzq - minDer;
+                }
+            } else {
+                if (compar < 0) {
+                    if (nodo.getIzquierdo() != null) {
+                        ret = diferenciaCandidatosAux(nodo.getIzquierdo(), elem);
+                    }
+                } else {
+                    if (nodo.getDerecho() != null) {
+                        ret = diferenciaCandidatosAux(nodo.getDerecho(), elem);
+                    }
+                }
+            }
+        }
+        return ret;
+    }
+
+    public int amplitudSubarbol(Comparable elem) {
+        /*
+         * Retorna la diferencia entre el mayor y el menor elemento del subarbol cuya
+         * raiz es el elemento pasado por parametro. Si el elemento no existe, retorna
+         * -1 y si alguno de los subarboles es nulo retorna la diferencia entre el hijo
+         * que esta y la raiz del subarbol.
+         */
+        int ret = -1;
+        if (pertenece(elem)) {
+            ret = amplitudSubarbolAux(this.raiz, elem);
+        }
+        return ret;
+    }
+
+    private int amplitudSubarbolAux(NodoABB nodo, Comparable elem) {
+        int ret = 0, compar, maxIzq, minDer;
+        if (nodo != null) {
+            compar = elem.compareTo(nodo.getElem());
+            if (compar == 0) {
+                if (nodo.getDerecho() != null && nodo.getIzquierdo() != null) {
+                    NodoABB aux = nodo.getIzquierdo(), aux1 = nodo.getDerecho();
+                    while (aux.getDerecho() != null) {
+                        aux = aux.getDerecho();
+                    }
+                    while (aux1.getIzquierdo() != null) {
+                        aux1 = aux1.getIzquierdo();
+                    }
+                    maxIzq = (int) aux.getElem();
+                    minDer = (int) aux1.getElem();
+                    ret = maxIzq - minDer;
+                } else {
+                    if (nodo.getIzquierdo() != null && nodo.getDerecho() == null) {
+                        NodoABB aux = nodo.getIzquierdo();
+                        while (aux.getDerecho() != null) {
+                            aux = aux.getDerecho();
+                        }
+                        ret = ((int) elem) - ((int) aux.getElem());
+                    } else {
+                        if (nodo.getDerecho() != null) {
+                            NodoABB aux = nodo.getDerecho();
+                            while (aux.getIzquierdo() != null) {
+                                aux = aux.getIzquierdo();
+                            }
+                            ret = ((int) elem) - ((int) aux.getElem());
+                        }
+                    }
+                }
+            } else {
+                if (compar < 0) {
+                    if (nodo.getIzquierdo() != null) {
+                        ret = amplitudSubarbolAux(nodo.getIzquierdo(), elem);
+                    }
+                } else {
+                    if (nodo.getDerecho() != null) {
+                        ret = amplitudSubarbolAux(nodo.getDerecho(), elem);
+                    }
+                }
+            }
+        }
+        return ret;
+    }
+
 }
