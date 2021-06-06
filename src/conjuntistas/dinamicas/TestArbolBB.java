@@ -5,7 +5,7 @@ public class TestArbolBB {
     public static void main(String[] args) {
         ArbolBB arb1 = new ArbolBB();
         ArbolBB arb2, arb3 = new ArbolBB();
-        arb1.insertar(32);
+        /*arb1.insertar(32);
         arb1.insertar(9);
         arb1.insertar(56);
         arb1.insertar(5);
@@ -35,7 +35,8 @@ public class TestArbolBB {
         System.out.println("Elimino el 56");
         System.out.println(arb1.eliminar(56));
         System.out.println("ToString: "+arb1.toString());
-        /*arb3.insertar(50);
+        System.out.println("Diferencia entre candidatos de 32: "+arb1.diferenciaCandidatos(32));*/
+        arb3.insertar(50);
         arb3.insertar(45);
         arb3.insertar(60);
         arb3.insertar(30);
@@ -44,9 +45,9 @@ public class TestArbolBB {
         arb3.insertar(63);
         
         System.out.println("ToString: "+arb3.toString());
+        System.out.println("Diferencia entre candidatos de 50: "+arb3.diferenciaCandidatos(50));
+        System.out.println("Amplitud de 50: "+arb3.amplitudSubarbol(45));
         arb3.eliminar(30);
-        System.out.println("ToString: "+arb3.toString());*/
-
-        
+        System.out.println("ToString: "+arb3.toString());
     }
 }
