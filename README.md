@@ -22,6 +22,7 @@ Repositorio correspondiente a la materia Estructuras de Datos 2021.
 ## Estructuras Conjuntistas
 - [Arbol Heap](https://github.com/mateoValdesolo/Edat-2021/blob/main/src/conjuntistas/ArbolHeap.java) 🌳
 - [Arbol Binario de Busqueda](https://github.com/mateoValdesolo/Edat-2021/blob/main/src/conjuntistas/ArbolBB.java) 🌳
+- [ArbolAVL](https://github.com/mateoValdesolo/Edat-2021/blob/main/src/conjuntistas/dinamicas/ArbolAVL.java) 🌳
 ***
 ### Tests de la Catedra
 - [TestBinario](https://github.com/mateoValdesolo/Edat-2021/blob/main/src/jerarquicas/TestBinario.java)
