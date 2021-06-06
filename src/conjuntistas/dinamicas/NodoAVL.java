@@ -48,7 +48,7 @@ public class NodoAVL {
             izq = this.izquierdo.altura;
         }
         if (this.derecho != null) {
-            izq = this.derecho.altura;
+            der = this.derecho.altura;
         }
         this.altura = (Math.max(izq, der)) + 1;
     }
