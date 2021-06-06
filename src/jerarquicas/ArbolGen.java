@@ -378,42 +378,66 @@ public class ArbolGen {
     }
 
     private boolean verificarCaminoAux(NodoGen nodo, Lista lis, int cont) {
-        boolean exito = true, encontrado = false;
-        if (nodo != null && exito) {
-            if (nodo.equals(lis.recuperar(cont))) {
+        boolean exito = true;
+        int longitud = lis.longitud();
+        if (nodo != null && exito && cont < longitud) {
+            if (nodo.getElem().equals(lis.recuperar(cont))) {
                 cont++;
-                if (nodo.getHijoIzquierdo() != null) {
-                    if (nodo.getHijoIzquierdo().getElem().equals(lis.recuperar(cont))) {
-                        exito = verificarCaminoAux(nodo.getHijoIzquierdo(), lis, cont);
-                    } else {
-                        NodoGen aux = nodo.getHijoIzquierdo();
-                        while (!encontrado && aux.getHermanoDerecho() != null) {
-                            if (aux.getHermanoDerecho().getElem().equals(lis.recuperar(cont))) {
-                                cont++;
-                                exito = verificarCaminoAux(aux.getHijoIzquierdo(), lis, cont);
-                            }
-                            if (cont == lis.longitud() + 1) {
-                                encontrado = true;
-                            }
+                if (nodo.getHijoIzquierdo().getElem().equals(lis.recuperar(cont))) {
+                    exito = verificarCaminoAux(nodo.getHijoIzquierdo(), lis, cont);
+                } else {
+                    NodoGen aux = nodo.getHijoIzquierdo();
+                    boolean encontrado = false;
+                    while (!encontrado && aux != null) {
+                        if (aux.getElem().equals(lis.recuperar(cont))) {
+                            encontrado = true;
+                            exito = verificarCaminoAux(aux, lis, cont);
+                        } else {
+                            aux = aux.getHermanoDerecho();
                         }
                     }
-                } else {
-                    exito = false;
+                    if (!encontrado) {
+                        exito = false;
+                    }
                 }
+            } else {
+                exito = false;
             }
         }
         return exito;
     }
 
     public Lista listarEntreNiveles(int niv1, int niv2) {
-        Lista lis = new Lista()
-        if(!esVacio()){
-            listarEntreNivelesAux(this.raiz,niv1, niv2, lis);
+        /*
+         * Recibe como parámetro dos elementos niv1 y niv2 y devuelve una lista con los
+         * elementos del árbol que están entre los niveles niv1 y niv2 inclusive.
+         */
+        Lista lis = new Lista();
+        if (!esVacio()) {
+            listarEntreNivelesAux(this.raiz, niv1, niv2, lis, 0);
         }
         return lis;
     }
 
-    private void listarEntreNivelesAux() {
-
+    private void listarEntreNivelesAux(NodoGen nodo, int niv1, int niv2, Lista lis, int nivActual) {
+        if (nodo != null) {
+            // Llamado recursivo con primer llamado de nodo.
+            if (nodo.getHijoIzquierdo() != null) {
+                nivActual++;
+                listarEntreNivelesAux(nodo.getHijoIzquierdo(), niv1, niv2, lis, nivActual);
+            }
+            // Visita del nodo.
+            if (nivActual >= niv1 && nivActual <= niv2) {
+                lis.insertar(nodo.getElem(), lis.longitud() + 1);
+            }
+            // Llamados recursivos con los otros hijos de nodo.
+            if (nodo.getHijoIzquierdo() != null) {
+                NodoGen hijo = nodo.getHijoIzquierdo().getHermanoDerecho();
+                while (hijo != null) {
+                    listarEntreNivelesAux(hijo, niv1, niv2, lis, nivActual);
+                    hijo = hijo.getHermanoDerecho();
+                }
+            }
+        }
     }
 }
