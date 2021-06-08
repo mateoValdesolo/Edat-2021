@@ -53,7 +53,7 @@ public class TestArbolGen {
         arb3.insertar('J', 'H');
         System.out.println(arb3.toString());
         System.out.println(arb3.listarEntreNiveles(2, 3));
-        /*Lista lis2 = new Lista(), lis = new Lista();
+        Lista lis2 = new Lista(), lis = new Lista();
         lis.insertar('A', 1);
         lis.insertar('C', 2);
         lis.insertar('I', 3);
@@ -61,8 +61,8 @@ public class TestArbolGen {
         lis2.insertar('B', 2);
         lis2.insertar('E', 3);
         lis2.insertar('F', 4);
-        System.out.println("<A,B,E>: "+arb3.verificarCamino(lis));
-        System.out.println("<A,B,E,F>: "+arb3.verificarCamino(lis2));*/
+        System.out.println("<A,C,I>: "+arb3.verificarCamino(lis));
+        System.out.println("<A,B,E,F>: "+arb3.verificarCamino(lis2));
 
 
     }
