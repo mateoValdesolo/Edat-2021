@@ -21,6 +21,8 @@ public class TestArbolBB {
         arb1.insertar(64);
         arb1.insertar(80);
 
+        System.out.println("Listar mayor que 7 en 9: "+arb1.listarMayoresQue(7, 9));
+        System.out.println("Clonar invertido de 50: "+arb1.clonarParteInvertida(56));
         System.out.println("Listar: "+arb1.listar());
         System.out.println("MaximoElem: "+arb1.maximoElem());
         System.out.println("MinimoElem: "+arb1.minimoElem());
@@ -35,19 +37,29 @@ public class TestArbolBB {
         System.out.println("Elimino el 56");
         System.out.println(arb1.eliminar(56));
         System.out.println("ToString: "+arb1.toString());
-        System.out.println("Diferencia entre candidatos de 32: "+arb1.diferenciaCandidatos(32));*/
-        arb3.insertar(50);
+        System.out.println("Diferencia entre candidatos de 32: "+arb1.diferenciaCandidatos(32));
+        /*arb3.insertar(50);
         arb3.insertar(45);
         arb3.insertar(60);
         arb3.insertar(30);
         arb3.insertar(67);
         arb3.insertar(32);
         arb3.insertar(63);
-        
-        System.out.println("ToString: "+arb3.toString());
+        /*
+            50
+           /  \            
+         45   60
+        /       \
+      30         67
+        \        /
+        32     63 
+        */
+        /*System.out.println("ToString: "+arb3.toString());
         System.out.println("Diferencia entre candidatos de 50: "+arb3.diferenciaCandidatos(50));
         System.out.println("Amplitud de 50: "+arb3.amplitudSubarbol(45));
+        System.out.println("Clonar invertido de 50: \n"+arb3.clonarParteInvertida(50));
+        System.out.println("ListarMayorQue: "+arb3.listarMayoresQue(30, 50));
         arb3.eliminar(30);
-        System.out.println("ToString: "+arb3.toString());
+        System.out.println("ToString: "+arb3.toString());*/
     }
 }
