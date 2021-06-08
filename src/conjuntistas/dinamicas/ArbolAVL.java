@@ -50,7 +50,7 @@ public class ArbolAVL {
             exito = insertarAux(this.raiz, elem);
             this.raiz.recalcularAltura();
             if (Math.abs(balance(this.raiz)) > 1) {
-                this.raiz = balancear(balance(this.raiz), this.raiz);
+                balancear(balance(this.raiz), this.raiz);
             }
         }
         return exito;
@@ -70,7 +70,7 @@ public class ArbolAVL {
                     exito = insertarAux(nodo.getIzquierdo(), elem);
                     nodo.recalcularAltura();
                     if (Math.abs(balance(nodo)) > 1) {
-                        nodo = balancear(balance(nodo.getIzquierdo()), nodo);
+                        balancear(balance(nodo), nodo);
                         nodo.recalcularAltura();
                     }
                 } else {
@@ -84,7 +84,7 @@ public class ArbolAVL {
                     exito = insertarAux(nodo.getDerecho(), elem);
                     nodo.recalcularAltura();
                     if (Math.abs(balance(nodo)) > 1) {
-                        nodo = balancear(balance(nodo.getDerecho()), nodo);
+                        balancear(balance(nodo), nodo);
                         nodo.recalcularAltura();
                     }
                 } else {
@@ -102,7 +102,7 @@ public class ArbolAVL {
             ret = eliminarAux(this.raiz, elem, null);
             this.raiz.recalcularAltura();
             if (Math.abs(balance(this.raiz)) > 1) {
-                this.raiz = balancear(balance(this.raiz), this.raiz);
+                balancear(balance(this.raiz), this.raiz);
                 this.raiz.recalcularAltura();
             }
         }
@@ -135,13 +135,13 @@ public class ArbolAVL {
                 if (res > 0) {
                     ret = eliminarAux(nodo.getIzquierdo(), elem, padre);
                     if (Math.abs(balance(nodo)) > 1) {
-                        this.raiz = balancear(balance(nodo), nodo);
+                        balancear(balance(nodo), nodo);
                         this.raiz.recalcularAltura();
                     }
                 } else {
                     ret = eliminarAux(nodo.getDerecho(), elem, padre);
                     if (Math.abs(balance(nodo)) > 1) {
-                        this.raiz = balancear(balance(nodo), nodo);
+                        balancear(balance(nodo), nodo);
                         this.raiz.recalcularAltura();
                     }
                 }
@@ -219,35 +219,29 @@ public class ArbolAVL {
         return balance;
     }
 
-    private NodoAVL balancear(int balance, NodoAVL nodo) {
+    private void balancear(int balance, NodoAVL nodo) {
         int balanceHijo;
-        NodoAVL ret = nodo;
         if (balance == 2) {
             balanceHijo = balance(nodo.getIzquierdo());
             if (balanceHijo == 1 || balanceHijo == 0) {
-                ret = rotarDerecha(nodo);
-                ret.recalcularAltura();
+                rotarDerecha(nodo);
             } else {
                 if (balanceHijo == -1) {
-                    ret = rotacionIzquierdaDerecha(nodo);
-                    ret.recalcularAltura();
+                    rotacionIzquierdaDerecha(nodo);
                 }
             }
         } else {
             if (balance == -2) {
                 balanceHijo = balance(nodo.getDerecho());
                 if (balanceHijo == -1 || balanceHijo == 0) {
-                    ret = rotarIzquierda(nodo);
-                    ret.recalcularAltura();
+                    rotarIzquierda(nodo);
                 } else {
                     if (balanceHijo == 1) {
-                        ret = rotacionDerechaIzquierda(nodo);
-                        ret.recalcularAltura();
+                        rotacionDerechaIzquierda(nodo);
                     }
                 }
             }
         }
-        return ret;
     }
 
     private NodoAVL rotarIzquierda(NodoAVL r) {
