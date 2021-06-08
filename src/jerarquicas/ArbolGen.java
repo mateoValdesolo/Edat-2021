@@ -423,8 +423,7 @@ public class ArbolGen {
         if (nodo != null) {
             // Llamado recursivo con primer llamado de nodo.
             if (nodo.getHijoIzquierdo() != null) {
-                nivActual++;
-                listarEntreNivelesAux(nodo.getHijoIzquierdo(), niv1, niv2, lis, nivActual);
+                listarEntreNivelesAux(nodo.getHijoIzquierdo(), niv1, niv2, lis, nivActual+1);
             }
             // Visita del nodo.
             if (nivActual >= niv1 && nivActual <= niv2) {
@@ -434,7 +433,7 @@ public class ArbolGen {
             if (nodo.getHijoIzquierdo() != null) {
                 NodoGen hijo = nodo.getHijoIzquierdo().getHermanoDerecho();
                 while (hijo != null) {
-                    listarEntreNivelesAux(hijo, niv1, niv2, lis, nivActual);
+                    listarEntreNivelesAux(hijo, niv1, niv2, lis, nivActual+1);
                     hijo = hijo.getHermanoDerecho();
                 }
             }
