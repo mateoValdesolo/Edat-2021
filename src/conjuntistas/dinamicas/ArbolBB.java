@@ -56,7 +56,7 @@ public class ArbolBB {
         return exito;
     }
 
-    public boolean insertarAux(NodoABB nodo, Comparable elem) {
+    private boolean insertarAux(NodoABB nodo, Comparable elem) {
         boolean exito = true;
         int compar = elem.compareTo(nodo.getElem());
         if (compar == 0) {
@@ -442,6 +442,94 @@ public class ArbolBB {
             }
         }
         return ret;
+    }
+
+    public Lista listarMayoresQue(int valor, Comparable elem) {
+        /*
+         * Devuelve una Lista con los elementos mayores que valor del subárbol con raíz
+         * elem. Si no existe elem en el árbol, el método deberá devolver una lista
+         * vacía.
+         * 
+         */
+        Lista ret = new Lista();
+        if (!esVacio()) {
+            listarMayoresQueAux(this.raiz, valor, elem, ret);
+        }
+        return ret;
+    }
+
+    private void listarMayoresQueAux(NodoABB nodo, Comparable valor, Comparable elem, Lista lis) {
+        boolean exito = false;
+        int res = nodo.getElem().compareTo(elem);
+        if (res == 0) {
+            agregarLista(nodo, valor, lis);
+        } else {
+            if (res < 0) {
+                if (nodo.getDerecho() != null) {
+                    listarMayoresQueAux(nodo.getDerecho(), valor, elem, lis);
+                }
+            } else {
+                if (nodo.getIzquierdo() != null) {
+                    listarMayoresQueAux(nodo.getIzquierdo(), valor, elem, lis);
+                }
+            }
+        }
+    }
+
+    private void agregarLista(NodoABB nodo, Comparable valor, Lista lis) {
+        if (nodo != null) {
+            int compar = nodo.getElem().compareTo(valor);
+            if (nodo.getIzquierdo() != null && compar > 0) {
+                agregarLista(nodo.getIzquierdo(), valor, lis);
+            }
+            if (compar > 0) {
+                lis.insertar(nodo.getElem(), lis.longitud() + 1);
+            }
+            if (nodo.getDerecho() != null) {
+                agregarLista(nodo.getDerecho(), valor, lis);
+            }
+        }
+    }
+
+    public ArbolBB clonarParteInvertida(Comparable elem) {
+        ArbolBB clon = new ArbolBB();
+        if (!esVacio()) {
+            clonarParteInvertidaAux(this.raiz, clon, elem);
+        }
+        return clon;
+    }
+
+    private void clonarParteInvertidaAux(NodoABB nodo, ArbolBB clon, Comparable elem) {
+        if (nodo != null) {
+            int res = nodo.getElem().compareTo(elem);
+            if (res == 0) {
+                clon.raiz = new NodoABB(nodo.getElem(), null, null);
+                clonarInvertido(nodo, clon.raiz);
+            } else {
+                if (res < 0) {
+                    if (nodo.getDerecho() != null) {
+                        clonarParteInvertidaAux(nodo.getDerecho(), clon, elem);
+                    }
+                } else {
+                    if (nodo.getIzquierdo() != null) {
+                        clonarParteInvertidaAux(nodo.getIzquierdo(), clon, elem);
+                    }
+                }
+            }
+        }
+    }
+
+    private void clonarInvertido(NodoABB nodo, NodoABB clon) {
+        if (nodo != null) {
+            if (nodo.getDerecho() != null) {
+                clon.setIzquierdo(new NodoABB(nodo.getDerecho().getElem(), null, null));
+                clonarInvertido(nodo.getDerecho(), clon.getIzquierdo());
+            }
+            if (nodo.getIzquierdo() != null) {
+                clon.setDerecho(new NodoABB(nodo.getIzquierdo().getElem(), null, null));
+                clonarInvertido(nodo.getIzquierdo(), clon.getDerecho());
+            }
+        }
     }
 
 }
