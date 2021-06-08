@@ -56,7 +56,7 @@ public class TablaHash {
          * Devuelve falso si hay al menos un elemento cargado en la tabla y verdadero en
          * caso contrario.
          */
-        return cant == 0;
+        return this.cant == 0;
     }
 
     public void vaciar() {
