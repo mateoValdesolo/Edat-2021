@@ -5,7 +5,7 @@ public class TestArbolBB {
     public static void main(String[] args) {
         ArbolBB arb1 = new ArbolBB();
         ArbolBB arb2, arb3 = new ArbolBB();
-        /*arb1.insertar(32);
+        arb1.insertar(32);
         arb1.insertar(9);
         arb1.insertar(56);
         arb1.insertar(5);
@@ -21,6 +21,8 @@ public class TestArbolBB {
         arb1.insertar(64);
         arb1.insertar(80);
 
+        System.out.println("Listar menores que 9 : "+arb1.listarMenores(9));
+        System.out.println("Mejor candidato de 9: "+arb1.mejorCandidato(9));
         System.out.println("Listar mayor que 7 en 9: "+arb1.listarMayoresQue(7, 9));
         System.out.println("Clonar invertido de 50: "+arb1.clonarParteInvertida(56));
         System.out.println("Listar: "+arb1.listar());

@@ -52,6 +52,7 @@ public class TestArbolGen {
         arb3.insertar('I', 'C');
         arb3.insertar('J', 'H');
         System.out.println(arb3.toString());
+        System.out.println(arb3.listarHastaNivel(2));
         System.out.println(arb3.listarEntreNiveles(2, 3));
         Lista lis2 = new Lista(), lis = new Lista();
         lis.insertar('A', 1);
