@@ -335,7 +335,7 @@ public class ArbolBin {
 
     public void cambiarHijos(Object izq, Object p, Object der) {
         /*
-         * Recibe 3 elementos del mismo tipo que los cargados enm el arbol y debe
+         * Recibe 3 elementos del mismo tipo que los cargados en el arbol y debe
          * modificar el arbol de la siguiente manera: si p (Padre) esta en el arbol, izq
          * quedara como su hijo izquierdo y der como su hijo derecho. Si el padre no
          * tiene hijo de ese lado, debe agregar un nodo para ponerlo y, si ya lo tiene,
@@ -376,17 +376,17 @@ public class ArbolBin {
     public ArbolBin clonarInvertido() {
         ArbolBin a = new ArbolBin();
         if (!esVacio()) {
-            a.raiz = clonarAux(this.raiz);
+            a.raiz = clonarInvertidoAux(this.raiz);
         }
         return a;
     }
 
-    private NodoArbol clonarAux(NodoArbol n) {
+    private NodoArbol clonarInvertidoAux(NodoArbol n) {
         NodoArbol nClon = null;
         if (n != null) {
             nClon = new NodoArbol(n.getElem(), null, null);
-            nClon.setIzquierdo(clonarAux(n.getDerecho()));
-            nClon.setDerecho(clonarAux(n.getIzquierdo()));
+            nClon.setIzquierdo(clonarInvertidoAux(n.getDerecho()));
+            nClon.setDerecho(clonarInvertidoAux(n.getIzquierdo()));
         }
         return nClon;
     }
