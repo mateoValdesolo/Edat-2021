@@ -423,7 +423,7 @@ public class ArbolGen {
         if (nodo != null) {
             // Llamado recursivo con primer llamado de nodo.
             if (nodo.getHijoIzquierdo() != null) {
-                listarEntreNivelesAux(nodo.getHijoIzquierdo(), niv1, niv2, lis, nivActual+1);
+                listarEntreNivelesAux(nodo.getHijoIzquierdo(), niv1, niv2, lis, nivActual + 1);
             }
             // Visita del nodo.
             if (nivActual >= niv1 && nivActual <= niv2) {
@@ -433,9 +433,35 @@ public class ArbolGen {
             if (nodo.getHijoIzquierdo() != null) {
                 NodoGen hijo = nodo.getHijoIzquierdo().getHermanoDerecho();
                 while (hijo != null) {
-                    listarEntreNivelesAux(hijo, niv1, niv2, lis, nivActual+1);
+                    listarEntreNivelesAux(hijo, niv1, niv2, lis, nivActual + 1);
                     hijo = hijo.getHermanoDerecho();
                 }
+            }
+        }
+    }
+
+    public Lista listarHastaNivel(int niv) {
+        /*
+         * Recibe por parámetro el nivel niv y devuelve una lista con todos los
+         * elementos de los nodos que se encuentran entre los niveles [0, niv]. El
+         * método debe recorrer el árbol en preorden y sólo visitar los nodos a listar,
+         * es decir que no debe recorrer nodos de más.
+         */
+        Lista lis = new Lista();
+        if (!esVacio()) {
+            listarHastaNivelAux(this.raiz, niv, lis, 0);
+        }
+        return lis;
+    }
+
+    private void listarHastaNivelAux(NodoGen nodo, int niv, Lista lis, int nivActual) {
+        if (nodo != null && nivActual <= niv) {
+            lis.insertar(nodo.getElem(), lis.longitud() + 1);
+            NodoGen hijo = nodo.getHijoIzquierdo();
+            nivActual += 1;
+            while (hijo != null) {
+                listarHastaNivelAux(hijo, niv, lis, nivActual);
+                hijo = hijo.getHermanoDerecho();
             }
         }
     }
