@@ -307,7 +307,6 @@ public class ArbolBB {
     }
 
     private String toStringAux(NodoABB nodo, String str) {
-
         if (nodo != null) {
             NodoABB izq = nodo.getIzquierdo(), der = nodo.getDerecho();
             str += "Nodo: " + nodo.getElem();
@@ -449,7 +448,6 @@ public class ArbolBB {
          * Devuelve una Lista con los elementos mayores que valor del subárbol con raíz
          * elem. Si no existe elem en el árbol, el método deberá devolver una lista
          * vacía.
-         * 
          */
         Lista ret = new Lista();
         if (!esVacio()) {
@@ -462,7 +460,7 @@ public class ArbolBB {
         boolean exito = false;
         int res = nodo.getElem().compareTo(elem);
         if (res == 0) {
-            agregarLista(nodo, valor, lis);
+            agregarListaMayores(nodo, valor, lis);
         } else {
             if (res < 0) {
                 if (nodo.getDerecho() != null) {
@@ -476,22 +474,27 @@ public class ArbolBB {
         }
     }
 
-    private void agregarLista(NodoABB nodo, Comparable valor, Lista lis) {
+    private void agregarListaMayores(NodoABB nodo, Comparable valor, Lista lis) {
         if (nodo != null) {
             int compar = nodo.getElem().compareTo(valor);
             if (nodo.getIzquierdo() != null && compar > 0) {
-                agregarLista(nodo.getIzquierdo(), valor, lis);
+                agregarListaMayores(nodo.getIzquierdo(), valor, lis);
             }
             if (compar > 0) {
                 lis.insertar(nodo.getElem(), lis.longitud() + 1);
             }
             if (nodo.getDerecho() != null) {
-                agregarLista(nodo.getDerecho(), valor, lis);
+                agregarListaMayores(nodo.getDerecho(), valor, lis);
             }
         }
     }
 
     public ArbolBB clonarParteInvertida(Comparable elem) {
+        /*
+         * Devuelve un nuevo árbol que es una copia del subárbol original, cuya raíz es
+         * el elemento dado y cada hijo está cambiado de lugar . Si el elemento no
+         * existe, el árbol que devuelve es vacío.
+         */
         ArbolBB clon = new ArbolBB();
         if (!esVacio()) {
             clonarParteInvertidaAux(this.raiz, clon, elem);
@@ -532,4 +535,100 @@ public class ArbolBB {
         }
     }
 
+    public Comparable mejorCandidato(Comparable elem) {
+        /*
+         * Retorna la diferencia entre el menor elemento del lado derecho y el mayor del
+         * lado izquierdo, del subarbol cuya raiz es el elemento pasado por parametro.
+         * Si el elemento no existe, retorna -1, y si alguno de los subarboles es nulo
+         * retorna -2.
+         */
+        int ret = 0;
+        if (pertenece(elem)) {
+            ret = mejorCandidatoAux(this.raiz, elem);
+        }
+        return ret;
+    }
+
+    private int mejorCandidatoAux(NodoABB nodo, Comparable elem) {
+        int ret = -1, compar, maxIzq, minDer;
+        if (nodo != null) {
+            compar = elem.compareTo(nodo.getElem());
+            if (compar == 0) {
+                if (nodo.getDerecho() != null && nodo.getIzquierdo() != null) {
+                    NodoABB aux = nodo.getIzquierdo(), aux1 = nodo.getDerecho();
+                    while (aux.getDerecho() != null) {
+                        aux = aux.getDerecho();
+                    }
+                    while (aux1.getIzquierdo() != null) {
+                        aux1 = aux1.getIzquierdo();
+                    }
+                    maxIzq = (int) aux.getElem();
+                    minDer = (int) aux1.getElem();
+                    if (Math.abs(maxIzq - (int) elem) > Math.abs(minDer - (int) elem)) {
+                        ret = minDer;
+                    } else {
+                        ret = maxIzq;
+                    }
+                }
+            } else {
+                if (compar < 0) {
+                    if (nodo.getIzquierdo() != null) {
+                        ret = mejorCandidatoAux(nodo.getIzquierdo(), elem);
+                    }
+                } else {
+                    if (nodo.getDerecho() != null) {
+                        ret = mejorCandidatoAux(nodo.getDerecho(), elem);
+                    }
+                }
+            }
+        }
+        return ret;
+    }
+
+    public Lista listarMenores(Comparable elem) {
+        /*
+         * Dado un elemento devuelve una lista con los elementos estrictamente menores
+         * que elem ordenados de menor a mayor.
+         */
+        Lista lis = new Lista();
+        if (pertenece(elem)) {
+            listarMenoresAux(this.raiz, lis, elem);
+        }
+        return lis;
+    }
+
+    private void listarMenoresAux(NodoABB nodo, Lista lis, Comparable elem) {
+        int compar;
+        if (nodo != null) {
+            compar = elem.compareTo(nodo.getElem());
+            if (compar == 0) {
+                agregarListaMenores(nodo, elem, lis);
+            } else {
+                if (compar < 0) {
+                    if (nodo.getIzquierdo() != null) {
+                        listarMenoresAux(nodo.getIzquierdo(), lis, elem);
+                    }
+                } else {
+                    if (nodo.getDerecho() != null) {
+                        listarMenoresAux(nodo.getDerecho(), lis, elem);
+                    }
+                }
+            }
+        }
+    }
+
+    private void agregarListaMenores(NodoABB nodo, Comparable elem, Lista lis) {
+        if (nodo != null) {
+            int compar = nodo.getElem().compareTo(elem);
+            if (nodo.getIzquierdo() != null) {
+                agregarListaMenores(nodo.getIzquierdo(), elem, lis);
+            }
+            if (compar < 0) {
+                lis.insertar(nodo.getElem(), lis.longitud() + 1);
+            }
+            if (nodo.getDerecho() != null) {
+                agregarListaMenores(nodo.getDerecho(), elem, lis);
+            }
+        }
+    }
 }
