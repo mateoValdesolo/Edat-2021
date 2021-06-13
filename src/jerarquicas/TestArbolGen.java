@@ -40,7 +40,7 @@ public class TestArbolGen {
         System.out.println("PorNiveles: "+arb1.listarPorNiveles());
         System.out.println("Preorden: "+arb1.listarPreorden());
         System.out.println("Inserto en pos inexistente: "+arb1.insertar('A', 'N'));*/
-        ArbolGen arb3 = new ArbolGen();
+        /*ArbolGen arb3 = new ArbolGen();
         arb3.insertar('A', 'A');
         arb3.insertar('B', 'A');
         arb3.insertar('C', 'A');
@@ -63,7 +63,22 @@ public class TestArbolGen {
         lis2.insertar('E', 3);
         lis2.insertar('F', 4);
         System.out.println("<A,C,I>: "+arb3.verificarCamino(lis));
-        System.out.println("<A,B,E,F>: "+arb3.verificarCamino(lis2));
+        System.out.println("<A,B,E,F>: "+arb3.verificarCamino(lis2));*/
+        ArbolGen arb4 = new ArbolGen();
+        arb4.insertar("G","G");
+        arb4.insertar("P","G");
+        arb4.insertar("F","G");
+        arb4.insertar("A","G");
+        arb4.insertar("B","G");
+        arb4.insertar("P","P");
+        arb4.insertar("K","B");
+        arb4.insertar("H","B");
+        arb4.insertar("T","A");
+        arb4.insertar("G","G");
+        arb4.insertar("G","G");
+
+
+        
 
 
     }

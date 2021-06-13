@@ -21,6 +21,7 @@ public class TestArbolBB {
         arb1.insertar(64);
         arb1.insertar(80);
 
+        System.out.println("Suma preorden de 9: "+arb1.sumarPreorden(43, 45));
         System.out.println("Listar menores que 9 : "+arb1.listarMenores(9));
         System.out.println("Mejor candidato de 9: "+arb1.mejorCandidato(9));
         System.out.println("Listar mayor que 7 en 9: "+arb1.listarMayoresQue(7, 9));
