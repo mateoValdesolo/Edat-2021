@@ -631,4 +631,55 @@ public class ArbolBB {
             }
         }
     }
+
+    public int sumarPreorden(Comparable elem, int k) {
+        /*
+         * Recibe como parámetro el elemento elem y el valor entero k. Se debe encontrar
+         * elem en el árbol, y para ese subárbol de raíz elem, recorrer en preorden y
+         * sumar los valores de cada nodo visitado hasta que esa suma llegue a superar
+         * el valor k, y ahí detener el recorrido. (elem se debe incluir en la suma.) El
+         * método deberá devolver el valor de la suma acumulada. Si el subárbol se
+         * recorre por completo sin llegar a sumar el valor k, se deberá devolver el
+         * valor negativo de la suma acumulada. Si el árbol es vacío, o bien no existe
+         * elem, el método deberá devolver 0.
+         */
+        int ret = 0;
+        if (!esVacio()) {
+            ret = sumarPreordenAux(this.raiz, elem, k);
+        }
+        return ret;
+    }
+
+    private int sumarPreordenAux(NodoABB nodo, Comparable elem, int valor) {
+        int compar, sum = 0;
+        if (nodo != null) {
+            compar = elem.compareTo(nodo.getElem());
+            if (compar == 0) {
+                sum = sumaPreorden(nodo, valor, 0);
+                if (sum < valor) {
+                    sum = -sum;
+                }
+            } else {
+                if (compar < 0) {
+                    if (nodo.getIzquierdo() != null) {
+                        sum = sumarPreordenAux(nodo.getIzquierdo(), elem, valor);
+                    }
+                } else {
+                    if (nodo.getDerecho() != null) {
+                        sum = sumarPreordenAux(nodo.getDerecho(), elem, valor);
+                    }
+                }
+            }
+        }
+        return sum;
+    }
+
+    private int sumaPreorden(NodoABB nodo, int valor, int suma) {
+        if (nodo != null && valor > suma) {
+            suma += (int) nodo.getElem();
+            suma = sumaPreorden(nodo.getIzquierdo(), valor, suma);
+            suma = sumaPreorden(nodo.getDerecho(), valor, suma);
+        }
+        return suma;
+    }
 }
