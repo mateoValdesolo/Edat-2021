@@ -49,9 +49,6 @@ public class ArbolAVL {
         } else {
             exito = insertarAux(this.raiz, elem);
             this.raiz.recalcularAltura();
-            if (Math.abs(balance(this.raiz)) > 1) {
-                balancear(balance(this.raiz), this.raiz);
-            }
         }
         return exito;
     }
@@ -70,7 +67,7 @@ public class ArbolAVL {
                     exito = insertarAux(nodo.getIzquierdo(), elem);
                     nodo.recalcularAltura();
                     if (Math.abs(balance(nodo)) > 1) {
-                        balancear(balance(nodo), nodo);
+                        nodo = balancear(balance(nodo), nodo);
                         nodo.recalcularAltura();
                     }
                 } else {
@@ -84,7 +81,7 @@ public class ArbolAVL {
                     exito = insertarAux(nodo.getDerecho(), elem);
                     nodo.recalcularAltura();
                     if (Math.abs(balance(nodo)) > 1) {
-                        balancear(balance(nodo), nodo);
+                        nodo = balancear(balance(nodo), nodo);
                         nodo.recalcularAltura();
                     }
                 } else {
@@ -219,29 +216,30 @@ public class ArbolAVL {
         return balance;
     }
 
-    private void balancear(int balance, NodoAVL nodo) {
+    private NodoAVL balancear(int balance, NodoAVL nodo) {
         int balanceHijo;
         if (balance == 2) {
             balanceHijo = balance(nodo.getIzquierdo());
             if (balanceHijo == 1 || balanceHijo == 0) {
-                rotarDerecha(nodo);
+                nodo = rotarDerecha(nodo);
             } else {
                 if (balanceHijo == -1) {
-                    rotacionIzquierdaDerecha(nodo);
+                    nodo = rotacionIzquierdaDerecha(nodo);
                 }
             }
         } else {
             if (balance == -2) {
                 balanceHijo = balance(nodo.getDerecho());
                 if (balanceHijo == -1 || balanceHijo == 0) {
-                    rotarIzquierda(nodo);
+                    nodo = rotarIzquierda(nodo);
                 } else {
                     if (balanceHijo == 1) {
-                        rotacionDerechaIzquierda(nodo);
+                        nodo = rotacionDerechaIzquierda(nodo);
                     }
                 }
             }
         }
+        return nodo;
     }
 
     private NodoAVL rotarIzquierda(NodoAVL r) {
