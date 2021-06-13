@@ -465,4 +465,49 @@ public class ArbolGen {
             }
         }
     }
+
+    public boolean esPadre(Object a, Object b) {
+        /*
+         * Que verifica si en el árbol el elemento a es padre del elemento b y devuelve
+         * true en caso que sea cierto y falso en caso contrario.
+         */
+        boolean ret = false;
+        if (!esVacio()) {
+            ret = esPadreAux(this.raiz, a, b);
+        }
+        return ret;
+    }
+
+    private boolean esPadreAux(NodoGen nodo, Object padre, Object hijo) {
+        boolean ret = false;
+        if (nodo != null) {
+            if (nodo.getElem().equals(padre)) {
+                NodoGen aux = nodo.getHijoIzquierdo();
+                if (aux.getElem().equals(hijo)) {
+                    ret = true;
+                } else {
+                    while (aux != null && !ret) {
+                        ret = esPadreAux2(aux, hijo);
+                        aux = aux.getHermanoDerecho();
+                    }
+                }
+            } else {
+                NodoGen aux2 = nodo.getHijoIzquierdo();
+                while (aux2 != null && !ret) {
+                    ret = esPadreAux(aux2, padre, hijo);
+                    aux2 = aux2.getHermanoDerecho();
+                }
+            }
+        }
+        return ret;
+    }
+
+    private boolean esPadreAux2(NodoGen aux, Object hijo) {
+        boolean ret = false;
+        if (aux.getElem().equals(hijo)) {
+            ret = true;
+        }
+        return ret;
+    }
+
 }
