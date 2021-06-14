@@ -65,7 +65,6 @@ public class ArbolAVL {
                 // Si tiene HI baja a la izquierda, sino agrega elem.
                 if (nodo.getIzquierdo() != null) {
                     exito = insertarAux(nodo.getIzquierdo(), elem);
-                    nodo.recalcularAltura();
                     if (Math.abs(balance(nodo)) > 1) {
                         nodo = balancear(balance(nodo), nodo);
                         nodo.recalcularAltura();
@@ -79,7 +78,6 @@ public class ArbolAVL {
                 // Si tiene HD baja a la derecha, sino agrega elem.
                 if (nodo.getDerecho() != null) {
                     exito = insertarAux(nodo.getDerecho(), elem);
-                    nodo.recalcularAltura();
                     if (Math.abs(balance(nodo)) > 1) {
                         nodo = balancear(balance(nodo), nodo);
                         nodo.recalcularAltura();
