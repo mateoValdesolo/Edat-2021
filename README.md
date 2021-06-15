@@ -22,7 +22,7 @@ Repositorio correspondiente a la materia Estructuras de Datos 2021.
 ## Estructuras Conjuntistas
 - [Arbol Heap | Heap Tree](https://github.com/mateoValdesolo/Edat-2021/blob/main/src/conjuntistas/ArbolHeap.java) 🌳
 - [Arbol Binario de Busqueda | Binary Search Tree](https://github.com/mateoValdesolo/Edat-2021/blob/main/src/conjuntistas/dinamicas/ArbolBB.java) 🌳
-- [ArbolAVL](https://github.com/mateoValdesolo/Edat-2021/blob/main/src/conjuntistas/dinamicas/ArbolAVL.java) 🌳
+- [ArbolAVL | AVL Tree](https://github.com/mateoValdesolo/Edat-2021/blob/main/src/conjuntistas/dinamicas/ArbolAVL.java) 🌳
 - [Hash](https://github.com/mateoValdesolo/Edat-2021/blob/main/src/conjuntistas/dinamicas/TablaHash.java)📋
 - [Hash Cerrado | Closed Hash](https://github.com/mateoValdesolo/Edat-2021/blob/main/src/conjuntistas/TablaHash.java)📋
 ***
