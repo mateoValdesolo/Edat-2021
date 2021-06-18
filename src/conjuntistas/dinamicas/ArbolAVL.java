@@ -47,31 +47,33 @@ public class ArbolAVL {
             this.raiz = new NodoAVL(elem, null, null);
             exito = true;
         } else {
-            exito = insertarAux(this.raiz, elem);
+            exito = insertarAux(this.raiz, elem, null, null);
             this.raiz.recalcularAltura();
         }
         return exito;
     }
 
-    private boolean insertarAux(NodoAVL nodo, Comparable elem) {
+    private boolean insertarAux(NodoAVL nodo, Comparable elem, NodoAVL padre, NodoAVL padreAux) {
         boolean exito = true;
         int compar = elem.compareTo(nodo.getElem());
         if (compar == 0) {
             // Elemento repetido
             exito = false;
         } else {
+            padreAux = padre;
+            padre = nodo;
             if (compar < 0) {
                 // Elem es menor a nodo.getElem().
                 // Si tiene HI baja a la izquierda, sino agrega elem.
                 if (nodo.getIzquierdo() != null) {
-                    exito = insertarAux(nodo.getIzquierdo(), elem);
+                    exito = insertarAux(nodo.getIzquierdo(), elem, padre, padreAux);
                     nodo.recalcularAltura();
                     if (Math.abs(balance(nodo)) > 1) {
                         NodoAVL aux = balancear(balance(nodo), nodo);
                         if (nodo.getElem().equals(this.raiz.getElem())) {
                             this.raiz = aux;
                         } else {
-                            nodo = aux;
+                            padreAux.setDerecho(aux);
                             nodo.recalcularAltura();
                         }
                     }
@@ -83,14 +85,14 @@ public class ArbolAVL {
                 // Elemento mayor que nodo.getElem().
                 // Si tiene HD baja a la derecha, sino agrega elem.
                 if (nodo.getDerecho() != null) {
-                    exito = insertarAux(nodo.getDerecho(), elem);
+                    exito = insertarAux(nodo.getDerecho(), elem, padre, padreAux);
                     nodo.recalcularAltura();
                     if (Math.abs(balance(nodo)) > 1) {
                         NodoAVL aux = balancear(balance(nodo), nodo);
                         if (nodo.getElem().equals(this.raiz.getElem())) {
                             this.raiz = aux;
                         } else {
-                            nodo = aux;
+                            padreAux.setIzquierdo(aux);
                             nodo.recalcularAltura();
                         }
                     }
