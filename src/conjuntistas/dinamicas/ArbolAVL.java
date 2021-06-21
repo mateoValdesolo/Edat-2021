@@ -108,13 +108,13 @@ public class ArbolAVL {
     public boolean eliminar(Comparable elem) {
         boolean ret = false;
         if (pertenece(elem)) {
-            ret = eliminarAux(this.raiz, elem, null);
+            ret = eliminarAux(this.raiz, elem, null,null);
             this.raiz.recalcularAltura();
         }
         return ret;
     }
 
-    private boolean eliminarAux(NodoAVL nodo, Comparable elem, NodoAVL padre) {
+    private boolean eliminarAux(NodoAVL nodo, Comparable elem, NodoAVL padre, NodoAVL padreAux) {
         int res = nodo.getElem().compareTo(elem);
         boolean ret = true;
         if (nodo != null) {
@@ -136,26 +136,34 @@ public class ArbolAVL {
                     }
                 }
             } else {
+                padreAux = padre;
                 padre = nodo;
                 if (res > 0) {
-                    ret = eliminarAux(nodo.getIzquierdo(), elem, padre);
-                    NodoAVL aux = balancear(balance(nodo), nodo);
-                    if (nodo.getElem().equals(this.raiz.getElem())) {
-                        this.raiz = aux;
-                    } else {
-                        nodo = aux;
-                        nodo.recalcularAltura();
+                    ret = eliminarAux(nodo.getIzquierdo(), elem, padre, padreAux);
+                    nodo.recalcularAltura();
+                    if (Math.abs(balance(nodo)) > 1) {
+                        NodoAVL aux = balancear(balance(nodo), nodo);
+                        if (nodo.getElem().equals(this.raiz.getElem())) {
+                            this.raiz = aux;
+                        } else {
+                            padreAux.setIzquierdo(aux);
+                            nodo.recalcularAltura();
+                        }
                     }
                 } else {
-                    ret = eliminarAux(nodo.getDerecho(), elem, padre);
-                    NodoAVL aux = balancear(balance(nodo), nodo);
-                    if (nodo.getElem().equals(this.raiz.getElem())) {
-                        this.raiz = aux;
-                    } else {
-                        nodo = aux;
-                        nodo.recalcularAltura();
+                    ret = eliminarAux(nodo.getDerecho(), elem, padre, padreAux);
+                    nodo.recalcularAltura();
+                    if (Math.abs(balance(nodo)) > 1) {
+                        NodoAVL aux = balancear(balance(nodo), nodo);
+                        if (nodo.getElem().equals(this.raiz.getElem())) {
+                            this.raiz = aux;
+                        } else {
+                            padreAux.setDerecho(aux);
+                            nodo.recalcularAltura();
+                        }
                     }
                 }
+                
             }
         }
         return ret;
@@ -407,7 +415,6 @@ public class ArbolAVL {
     }
 
     private String toStringAux(NodoAVL nodo, String str) {
-
         if (nodo != null) {
             NodoAVL izq = nodo.getIzquierdo(), der = nodo.getDerecho();
             str += "Nodo: " + nodo.getElem();
