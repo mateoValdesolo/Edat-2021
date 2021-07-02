@@ -94,7 +94,7 @@ public class Cola {
         // Retorna un string con los elementos de la cola
         String cad = "";
         if (esVacia()) {
-            cad = "La cola esta vacia";
+            cad = "[ ]";
         } else {
             cad = "[";
             int aux = this.frente;
