@@ -5,7 +5,7 @@
  */
 package lineales.dinamicas;
 
-import test.lineales.*;
+import lineales.estaticas.Pila;
 
 /**
  *
@@ -23,6 +23,15 @@ public class TestPila {
         pil1.apilar(1);
         pil1.apilar(2);
         pil1.apilar(3);
+        pil1.apilar(4);
+        pil1.apilar(5);
+        pil1.apilar(6);
+        pil1.apilar(7);
+        pil1.apilar(8);
+        pil1.apilar(9);
+        pil1.apilar(10);
+        pil1.apilar(11);
+
         
         
         System.out.println(pil1.toString());
@@ -30,6 +39,7 @@ public class TestPila {
         System.out.println(pil2.toString());
         pil1.vaciar();
         System.out.println(pil2.toString());
+        System.out.println(pil1.toString());
 
         
         
