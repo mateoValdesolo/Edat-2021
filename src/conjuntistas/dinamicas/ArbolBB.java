@@ -657,7 +657,7 @@ public class ArbolBB {
             if (compar == 0) {
                 sum = sumaPreorden(nodo, valor, 0);
                 if (sum < valor) {
-                    sum = -sum;
+                    sum = sum*(-1);
                 }
             } else {
                 if (compar < 0) {
@@ -677,7 +677,11 @@ public class ArbolBB {
     private int sumaPreorden(NodoABB nodo, int valor, int suma) {
         if (nodo != null && valor > suma) {
             suma += (int) nodo.getElem();
+        }
+        if(valor > suma){
             suma = sumaPreorden(nodo.getIzquierdo(), valor, suma);
+        }
+        if(valor > suma){
             suma = sumaPreorden(nodo.getDerecho(), valor, suma);
         }
         return suma;
