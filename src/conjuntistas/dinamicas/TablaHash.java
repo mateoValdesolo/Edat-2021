@@ -14,11 +14,6 @@ public class TablaHash {
         this.cant = 0;
     }
 
-    public boolean pertenece(Object elem) {
-        /*
-         * Verifica si el elemento se encuentra en la estructura.
-         */
-    }
 
     public boolean insertar(Object nuevoElem) {
         /*
@@ -44,11 +39,17 @@ public class TablaHash {
 
     public boolean eliminar(Object elem) {
         /*
-         * recibe el elemento que se desea eliminar y se procede a quitarlo de la tabla.
+         * Recibe el elemento que se desea eliminar y se procede a quitarlo de la tabla.
          * Si todo funciona OK (el elemento estaba cargado previamente en la tabla)
          * devuelve verdadero, si hay algún problema devuelve falso.
          */
 
+    }
+
+    public boolean pertenece(Object elem) {
+        /*
+         * Verifica si el elemento se encuentra en la estructura.
+         */
     }
 
     public boolean esVacia() {
