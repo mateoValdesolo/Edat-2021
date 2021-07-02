@@ -9,12 +9,12 @@ public class MixLineales {
     public static void main(String[] args) {
         Lista l1 = new Lista();
         Cola c1 = new Cola();
-        l1.insertar(8, 1);
+        /*l1.insertar(8, 1);
         l1.insertar(6, 2);
         l1.insertar(2, 3);
         l1.insertar(7, 4);
         l1.insertarAnterior(7, 5);
-        System.out.println(l1.toString());
+        System.out.println(l1.toString());*/
         c1.poner('a');
         c1.poner('b');
         c1.poner('c');
@@ -24,8 +24,11 @@ public class MixLineales {
         c1.poner('$');
         c1.poner('f');
         c1.poner('g');
+        c1.poner('$');
+        c1.poner('h');
+        c1.poner('i');
         System.out.println(c1.toString());
-        System.out.println(generar(c1));
+        System.out.println(crearLista(c1));
 
     }
 
@@ -142,53 +145,51 @@ public class MixLineales {
         return nueva;
     }
 
+
     public static Lista crearLista(Cola c1) {
-        /*
-         * Recibe por parametro una cola que tiene el siguiente formato:
-         * c1$c2$c3$....$cn, donde cada ci es una sucesion de elementos de la cola, se
-         * debe generar como salida una lista con todas las secuencias impares
-         * invertidas y las pares igual que la original
-         */
-        Lista nueva = new Lista();
-        Cola clon = c1.clone();
-        Pila pil = new Pila();
         int pos = 1;
         int cont = 1;
-
-        if (!clon.esVacia()) {
-            while (!clon.esVacia()) {
-                if (cont % 2 == 0) {
-                    if ((char) clon.obtenerFrente() == '$') {
-                        cont++;
-                    }
-                    nueva.insertar('$', pos);
-                    nueva.insertar(clon.obtenerFrente(), pos);
-                    pos++;
-                    
+        Lista lis = new Lista();
+        Pila pil = new Pila();
+        Cola col = c1.clone();
+        //Recorre la cola elemento a elemento.
+        while(!col.esVacia()){
+            //Si es impar, invierto.
+            if((cont % 2) != 0){
+                //Si es != $
+                if( (char) col.obtenerFrente() != '$'){
+                    pil.apilar(col.obtenerFrente());
                 } else {
-                    if ((char) clon.obtenerFrente() == '$') {
-                        cont++;
-                        while (!pil.esVacia()) {
-                            nueva.insertar(pil.obtenerTope(), pos);
-                            pil.desapilar();
-                            pos++;
-                        }
-                        nueva.insertar('$', pos);
+                    ////Si es == $
+                    while(!pil.esVacia()){
+                        lis.insertar(pil.obtenerTope(), pos);
+                        pil.desapilar();
                         pos++;
-                    } else {
-                        pil.apilar(clon.obtenerFrente());
                     }
-                }
-                clon.sacar();
-            }
-            if (cont % 2 != 0) {
-                while (!pil.esVacia()) {
-                    nueva.insertar(pil.obtenerTope(), pos);
-                    pil.desapilar();
+                    lis.insertar('$', pos);
                     pos++;
+                    cont++;
+                }
+            } else {
+                //Si es par.
+                //Si es != $
+                if( (char) col.obtenerFrente() != '$'){
+                    lis.insertar(col.obtenerFrente(), pos);
+                    pos++;
+                } else {
+                    ////Si es == $
+                    lis.insertar('$', pos);
+                    pos++;
+                    cont++;
                 }
             }
+            col.sacar();
         }
-        return nueva;
+        while(!pil.esVacia()){
+            lis.insertar(pil.obtenerTope(), pos);
+            pil.desapilar();
+            pos++;
+         }
+        return lis;
     }
 }
