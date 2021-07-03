@@ -418,4 +418,27 @@ public class ArbolBin {
         }
         return ret;
     }
+
+    public boolean verificarIguales(ArbolBin otro) {
+        /*
+         * Verifique si el árbol otro, recibido por parámetro, es igual al árbol this.
+         */
+        boolean ret = false;
+        ret = verificarIgualesAux(this.raiz, otro.raiz);
+        return ret;
+    }
+
+    private boolean verificarIgualesAux(NodoArbol nodo, NodoArbol otroNodo){
+        boolean ret = false;
+        if(nodo == null && otroNodo == null){
+            ret = true;
+        } else {
+            if(nodo != null && otroNodo != null){
+                ret = (nodo.getElem().equals(otroNodo.getElem()) && 
+                verificarIgualesAux(nodo.getIzquierdo(),otroNodo.getIzquierdo())
+                && verificarIgualesAux(nodo.getDerecho(),otroNodo.getDerecho()));
+            }
+        }
+        return ret;
+    }
 }
