@@ -170,20 +170,6 @@ public class Lista {
         return s;
     }
 
-    /*
-     * public void invertir(){ int longi = this.longitud(); Nodo aux =
-     * this.cabecera; while(aux != null) { if(aux != null){ this.cabecera = aux; aux
-     * = aux.getEnlace(); if(aux.getEnlace() != null){
-     * aux.getEnlace().setEnlace(aux); } } } if(aux != null){ aux.setEnlace(null); }
-     * } /*public void invertir() { //Invierte la lista actual Nodo aux =
-     * this.cabecera; invertirAux(this.cabecera); if (aux != null) {
-     * aux.setEnlace(null); } }
-     * 
-     * private void invertirAux(Nodo nodo) { if (nodo != null) { this.cabecera =
-     * nodo; invertirAux(nodo.getEnlace()); if (nodo.getEnlace() != null) {
-     * nodo.getEnlace().setEnlace(nodo); } } }
-     */
-
     public void eliminarApariciones(Object x) {
         /*
          * Elimina las apariciones del elemento x en la lista actual
@@ -262,4 +248,22 @@ public class Lista {
         }
     }
 
+    public void eliminarAnterior(Object elem1) {
+        /*
+         * Elimina el elemento anteriror solo si es distinto de elem. Si el elemento
+         * anterior es igual a elem, o bien elem está en la posicion 1 de la lista, no
+         * se debe realizar eliminación.
+         */
+        Nodo aux = this.cabecera;
+        if (!esVacia()) {
+            while (aux.getEnlace() != null) {
+                if (aux.getEnlace().getEnlace() != null && aux.getEnlace().getEnlace().getElem().equals(elem1)) {
+                    if (!aux.getEnlace().getElem().equals(elem1)) {
+                        aux.setEnlace(aux.getEnlace().getEnlace());
+                    }
+                }
+                aux = aux.getEnlace();
+            }
+        }
+    }
 }
