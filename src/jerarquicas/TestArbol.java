@@ -4,7 +4,7 @@ public class TestArbol {
 
     public static void main(String[] args) {
         ArbolBin arb1 = new ArbolBin();
-        arb1.insertar('A', 'A', 'I');
+        /*arb1.insertar('A', 'A', 'I');
         arb1.insertar('B', 'A', 'I');
         arb1.insertar('C', 'A', 'D');
         arb1.insertar('D', 'B', 'I');
@@ -26,7 +26,7 @@ public class TestArbol {
         System.out.println(arb2.toString());
         System.out.println(arb2.altura());
         System.out.println(arb1.frontera());
-        System.out.println(arb2.toString());*/
+        System.out.println(arb2.toString());
         ArbolBin arb2 = new ArbolBin();
         arb2.insertar('F', 'F', 'I');
         arb2.insertar('A', 'F', 'I');
@@ -37,8 +37,24 @@ public class TestArbol {
         arb2.insertar('X', 'P', 'I');
         System.out.println(arb2.toString());
         arb2.cambiarHijos('Z', 'T', 'Q');
-        System.out.println(arb2.toString());
-        
-        
+        System.out.println(arb2.toString());*/
+        arb1.insertar(34, 34, 'I');
+        arb1.insertar(25, 34, 'I');
+        arb1.insertar(17, 34, 'D');
+        arb1.insertar(71, 25, 'I');
+        arb1.insertar(63, 71, 'D');
+        arb1.insertar(12, 17, 'I');
+        arb1.insertar(23, 17, 'D');
+        System.out.println("arb1: "+arb1.toString());
+
+        ArbolBin arb2 = new ArbolBin();
+        arb2.insertar(34, 34, 'I');
+        arb2.insertar(25, 34, 'I');
+        arb2.insertar(17, 34, 'D');
+        arb2.insertar(71, 25, 'I');
+        arb2.insertar(63, 71, 'D');
+        arb2.insertar(12, 17, 'I');
+        arb2.insertar(23, 17, 'D');
+        System.out.println(arb1.verificarIguales(arb2));
     }
 }

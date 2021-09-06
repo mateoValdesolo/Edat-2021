@@ -65,7 +65,7 @@ public class TestArbolGen {
         System.out.println("<A,C,I>: "+arb3.verificarCamino(lis));
         System.out.println("<A,B,E,F>: "+arb3.verificarCamino(lis2));*/
         ArbolGen arb4 = new ArbolGen();
-        arb4.insertar("G","G");
+        /*arb4.insertar("G","G");
         arb4.insertar("P","G");
         arb4.insertar("F","G");
         arb4.insertar("A","G");
@@ -75,12 +75,16 @@ public class TestArbolGen {
         arb4.insertar("H","B");
         arb4.insertar("T","A");
         arb4.insertar("G","G");
-        arb4.insertar("G","G");
-
-
-        
-
-
+        arb4.insertar("G","G");*/
+        arb4.insertar(91, 91);
+        arb4.insertar(52, 91);
+        arb4.insertar(65, 91);
+        arb4.insertar(91, 91);
+        arb4.insertar(91, 52);
+        arb4.insertar(71, 52);
+        arb4.insertar(14, 65);
+        arb4.insertarSobrino(91, 91, 1);
+        System.out.println(arb4.toString());
     }
 
 }

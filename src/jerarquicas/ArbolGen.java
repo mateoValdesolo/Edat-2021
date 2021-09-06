@@ -491,7 +491,8 @@ public class ArbolGen {
                         aux = aux.getHermanoDerecho();
                     }
                 }
-            } else {
+            }
+            if (!ret) {
                 NodoGen aux2 = nodo.getHijoIzquierdo();
                 while (aux2 != null && !ret) {
                     ret = esPadreAux(aux2, padre, hijo);
@@ -510,4 +511,49 @@ public class ArbolGen {
         return ret;
     }
 
+    public void insertarSobrino(Object t, Object h, Object s) {
+        /*
+         * Recibe los parámetros t=tío, h=hermano y s=sobrino, y si t está en el árbol y
+         * tiene un hermano h, le agrega a s como hijo de h. En caso que la inserción no
+         * sea posible retornará false y si es posible retornará true.
+         */
+        if (!esVacio()) {
+            insertarSobrinoAux(this.raiz, t, h, s, false);
+        }
+    }
+
+
+    private void insertarSobrinoAux(NodoGen nodo,Object t, Object h, Object s, boolean insertado) {
+        if (nodo != null && !insertado) {
+            if (nodo.getElem().equals(t)) {
+                if (nodo.getHijoIzquierdo().getElem().equals(h)){
+                    NodoGen aux = nodo.getHijoIzquierdo();
+                    NodoGen sob = new NodoGen(s,null,aux.getHijoIzquierdo());
+                    aux.setHijoIzquierdo(sob);
+                    insertado = true;
+                } else {
+                    NodoGen aux = nodo.getHijoIzquierdo();
+                    while (aux != null && !insertado) {
+                        if (aux.getElem().equals(h)) {
+                            NodoGen aux2 = nodo.getHijoIzquierdo();
+                            NodoGen sob = new NodoGen(s,null,aux2.getHijoIzquierdo());
+                            aux.setHijoIzquierdo(sob);
+                            insertado = true;
+                        } else {
+                            insertarSobrinoAux(aux,t,h,s, insertado);
+                            aux = aux.getHermanoDerecho();
+                        }
+                    }
+                }
+            } else {
+                NodoGen aux = nodo.getHijoIzquierdo();
+                while(aux != null && !insertado){
+                    insertarSobrinoAux(aux, t, h, s, insertado);
+                    if(!insertado){
+                        aux = aux.getHermanoDerecho();
+                    }
+                }
+            }
+        }
+    }
 }

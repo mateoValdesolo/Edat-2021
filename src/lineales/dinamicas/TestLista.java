@@ -13,7 +13,7 @@ public class TestLista {
 
     public static void main(String[] args) {
         Lista lista1 = new Lista();
-        lista1.insertar(2, 1);
+        /*lista1.insertar(2, 1);
         lista1.insertar(3, 2);
         lista1.insertar(4, 3);
         lista1.insertar(5, 4);
@@ -48,7 +48,19 @@ public class TestLista {
         System.out.println("Longitud: "+lista1.longitud());
         System.out.println(lista1.obtenerMultiplos(3).toString());
         lista1.eliminarApariciones(2);
-        System.out.println(lista1);
+        System.out.println(lista1);*/
+        lista1.insertar('S', 1);
+        lista1.insertar('M', 2);
+        lista1.insertar('Q', 3);
+        lista1.insertar('X', 4);
+        lista1.insertar('S', 5);
+        lista1.insertar('H', 6);
+        lista1.insertar('E', 7);
+        lista1.insertar('S', 8);
+        lista1.insertar('S', 9);
+        lista1.insertar('A', 10);
+        lista1.eliminarAnterior('S');
+        System.out.println(lista1.toString());
     }
 
 }
